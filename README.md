@@ -33,6 +33,12 @@ Make sure you have the following installed:
    npm install
    ```
 
+4. Copy the environment template and fill out the missing values like the API token:
+
+   ```
+   cp env.template .env.local
+   ```
+
 ### Running the Application
 
 To run the application in development mode, use the following command:
