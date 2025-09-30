@@ -48,10 +48,10 @@ export async function loadTaskBySlug(slug: string): Promise<Task | undefined> {
   return mapToTask(response.items[0]);
 }
 
-function mapToTask(
+export function mapToTask(
   entry: Entry<TaskSkeleton, undefined, string>
 ): Task | undefined {
-  if (!entry) return undefined;
+  if (!entry || !entry.fields) return undefined;
 
   let clickAreas: ClickArea[] = [];
   if (Array.isArray(entry.fields?.simpleInteractions)) {

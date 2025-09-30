@@ -24,7 +24,7 @@ export type ClickAreaSkeleton = EntrySkeletonType<ClickAreaFields, "clickArea">;
 export function mapToClickArea(
   entry: Entry<ClickAreaSkeleton, undefined, string>
 ): ClickArea | undefined {
-  if (!entry) return undefined;
+  if (!entry || !entry.fields) return undefined;
 
   return {
     id: entry.sys.id,

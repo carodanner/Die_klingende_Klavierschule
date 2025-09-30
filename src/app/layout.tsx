@@ -13,7 +13,8 @@ export default function RootLayout({
           <h1>Klingende Klavierschule</h1>
         </header>
         <nav style={{ padding: "1rem", background: "#e0e0e0" }}>
-          <Link href="/">Home</Link> | <Link href="/aufgabe">Aufgaben</Link>
+          <Link href="/">Home</Link> | <Link href="/aufgabe">Aufgaben</Link> |{" "}
+          <Link href="/aufgabenListe">Aufgaben Listen</Link>
         </nav>
         <main style={{ padding: "2rem" }}>{children}</main>
       </body>
