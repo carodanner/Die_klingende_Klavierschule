@@ -1,6 +1,6 @@
 import { EntriesQueries, EntrySkeletonType } from "contentful";
 import { mapToTask, Task } from "../model/tasks";
-import { client } from "../contentful";
+import { getEntries } from "../contentful";
 
 type TaskFields = {
   name: Record<string, string>;
@@ -19,7 +19,7 @@ export async function loadTasks(): Promise<Task[]> {
     content_type: "aufgabe",
   };
 
-  const response = await client.getEntries<TaskSkeleton>(query);
+  const response = await getEntries<TaskSkeleton>(query);
 
   return response.items.map(mapToTask).filter((task) => task !== undefined);
 }
