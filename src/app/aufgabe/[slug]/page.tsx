@@ -45,8 +45,8 @@ export default async function Page({
         position. <br />
         Add the sounds and play the sound on click.
         <br />
-        Add a query parameter to the page. param is called debug. If debug is
-        set to true, show the borders of the click areas.
+        Add a query parameter to the page. param is called preview. If preview
+        is set to true, show the borders of the click areas.
         <br />
         <br />
         {JSON.stringify(task.simpleInteractions, null, 2)}
