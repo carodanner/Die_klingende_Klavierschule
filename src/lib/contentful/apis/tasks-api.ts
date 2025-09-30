@@ -1,5 +1,5 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
-import { getEntries } from "../contentful";
+import { getEntries } from "../client";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
 import { extractImage, ImageWrapper } from "./image-api";
 

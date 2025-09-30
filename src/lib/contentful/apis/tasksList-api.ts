@@ -1,5 +1,5 @@
 import { EntriesQueries, Entry, EntrySkeletonType } from "contentful";
-import { getEntries } from "../contentful";
+import { getEntries } from "../client";
 import { mapToTask, Task, TaskSkeleton } from "./tasks-api";
 
 export type TaskList = {
