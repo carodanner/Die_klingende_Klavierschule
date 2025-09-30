@@ -1,12 +1,21 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
-import { mapToTask, Task } from "../model/tasks";
 import { getEntries } from "../contentful";
+import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
+import { extractImage, ImageWrapper } from "./image-api";
+
+export type Task = {
+  id: string;
+  name: string;
+  slug: string;
+  image?: ImageWrapper;
+  simpleInteractions: ClickArea[];
+};
 
 type TaskFields = {
   name: Record<string, string>;
   slug: Record<string, string>;
   image: Asset;
-  simpleInteractions: Array<Entry<ClickAreaSkeleton>>; // TODO Viet define the ClickArea fields, skeleton and Model based on contentful. then create a mapping function for clickareas.
+  simpleInteractions: Array<Entry<ClickAreaSkeleton>>;
 };
 
 export type TaskSkeleton = EntrySkeletonType<TaskFields, "aufgabe">;
@@ -37,4 +46,29 @@ export async function loadTaskBySlug(slug: string): Promise<Task | undefined> {
   }
 
   return mapToTask(response.items[0]);
+}
+
+function mapToTask(
+  entry: Entry<TaskSkeleton, undefined, string>
+): Task | undefined {
+  if (!entry) return undefined;
+
+  let clickAreas: ClickArea[] = [];
+  if (Array.isArray(entry.fields?.simpleInteractions)) {
+    clickAreas = (
+      entry.fields.simpleInteractions as Array<Entry<ClickAreaSkeleton>>
+    )
+      .map((entry) =>
+        mapToClickArea(entry as Entry<ClickAreaSkeleton, undefined, string>)
+      )
+      .filter((ca): ca is ClickArea => ca !== undefined);
+  }
+
+  return {
+    id: entry.sys.id,
+    name: entry.fields.name,
+    slug: entry.fields.slug,
+    image: extractImage(entry.fields.image),
+    simpleInteractions: clickAreas,
+  };
 }
