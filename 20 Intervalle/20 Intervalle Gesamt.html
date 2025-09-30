@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>19 Intervalle Gesamt</title>
+        <script>
+          function soundClicked(soundIdClicked) {
+            var allAudioElements = document.getElementsByTagName('audio');
+            for (var i=0; i<allAudioElements.length; i++) {
+              var audioElement = allAudioElements[i];
+              if (audioElement.id === soundIdClicked) {
+                // clicked sound
+                if (audioElement.paused) {
+                  // start sound playing
+                  audioElement.play();
+                } else {
+                  // stop sound, if already playing
+                  stopAudio(audioElement);
+                }
+              } else {
+                // stop other sound already playing
+                stopAudio(audioElement);
+              }
+            }
+          } 
+
+          function stopAudio(audioElement) {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+          }
+        </script>
+    </head>
+  <body>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 597 478" style="max-width: 20cm">
+  <image width="597" height="478" xlink:href="Intervalle-Gesamt.jpg"></image>
+      <a xlink:href="#0">
+        <rect x="8" y="25" fill="#fff" opacity="0" width="52" height="69" onclick="javascript:soundClicked('sound0')"></rect>
+          //Text
+      </a>
+      <a xlink:href="#1">
+        <rect x="68" y="28" fill="#fff" opacity="0" width="56" height="50" onclick="javascript:soundClicked('sound1')"></rect>
+        //Stern
+      </a>
+      <a xlink:href="#2">
+        <rect x="204" y="181" fill="#fff" opacity="0" width="170" height="276" onclick="javascript:soundClicked('sound2')"></rect>
+        //Esel
+      </a>
+      <a xlink:href="20-Intervalle-Gesamt-mit-Erklärungen.html"> <rect x="544" y="34" fill="#fff" opacity="0" width="52" height="50"></rect>
+          //Infoseite
+      </a>
+
+    </svg>
+    <audio id="sound0"><source src="Intervalle-Text-1.mp3" type="audio/mpeg"></audio>    
+    <audio id="sound1"><source src="Intervalle-Stern.mp3" type="audio/mpeg"></audio>
+    <audio id="sound2" onended="this.children[0].src='Intervalle-Esel-2.mp3'; this.load()"><source src="Intervalle-Esel-1.mp3" type="audio/mpeg"> 
+        Your browser does not support the audio element. </audio>                                                                                                                                                                                                                      
+  </body>
+</html>

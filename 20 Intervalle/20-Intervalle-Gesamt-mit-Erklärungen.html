@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Klavierschule 20 Intervalle mit Erklärungen</title>
+        <script>
+          function soundClicked(soundIdClicked) {
+            var allAudioElements = document.getElementsByTagName('audio');
+            for (var i=0; i<allAudioElements.length; i++) {
+              var audioElement = allAudioElements[i];
+              if (audioElement.id === soundIdClicked) {
+                // clicked sound
+                if (audioElement.paused) {
+                  // start sound playing
+                  audioElement.play();
+                } else {
+                  // stop sound, if already playing
+                  stopAudio(audioElement);
+                }
+              } else {
+                // stop other sound already playing
+                stopAudio(audioElement);
+              }
+            }
+          } 
+
+          function stopAudio(audioElement) {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+          }
+        </script>
+    </head>
+  <body>
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 757 511" style="max-width: 20cm">
+  <image width="757" height="511" xlink:href="Intervalle-Gesamt-mit-Erklärungen.jpg"></image>
+    <a xlink:href="20 Intervalle Gesamt.html">
+    <rect x="707" y="0" fill="#fff" opacity="0" width="50" height="52"></rect>
+  </a>
+</svg>
+  </body>
+</html>
