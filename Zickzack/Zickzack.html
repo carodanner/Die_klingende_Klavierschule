@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zickzack Gesamt </title>
+        <script>
+          function soundClicked(soundIdClicked) {
+            var allAudioElements = document.getElementsByTagName('audio');
+            for (var i=0; i<allAudioElements.length; i++) {
+              var audioElement = allAudioElements[i];
+              if (audioElement.id === soundIdClicked) {
+                // clicked sound
+                if (audioElement.paused) {
+                  // start sound playing
+                  audioElement.play();
+                } else {
+                  // stop sound, if already playing
+                  stopAudio(audioElement);
+                }
+              } else {
+                // stop other sound already playing
+                stopAudio(audioElement);
+              }
+            }
+          } 
+
+          function stopAudio(audioElement) {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+          }
+        </script>
+    </head>
+  <body>
+    <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 893 500 " style="max-width: 20cm">
+  <image width="893" height="500" xlink:href="Zickzack-Gesamt.jpg"></image>  
+      <a xlink:href="#0">
+        <rect x="9" y="26" fill="#fff" opacity="0" width="50" height="61"  onclick="javascript:soundClicked('sound0')"></rect>
+          //Starttext
+      </a>
+      <a xlink:href="#1">
+        <rect x="65" y="29" fill="#fff" opacity="0" width="50" height="50"  onclick="javascript:soundClicked('sound1')"></rect>
+        //Musik
+      </a>
+      <a xlink:href="#2">
+        <rect x="130" y="22" fill="#fff" opacity="0" width="50" height="62" onclick="javascript:soundClicked('sound2')"></rect>
+        //Hausaufgabe
+      </a>
+      <a xlink:href="#3">
+        <rect x="4" y="279" fill="#fff" opacity="0" width="117" height="167"" onclick="javascript:soundClicked('sound3')"></rect>
+          //Hund
+      </a>
+       <a xlink:href="#4">
+        <rect x="338" y="265" fill="#fff" opacity="0" width="208" height="181" onclick="javascript:soundClicked('sound4')"></rect>
+           //Hasen
+      </a>
+       <a xlink:href="#5">
+        <rect x="343" y="134" fill="#fff" opacity="0" width="50" height="50" onclick="javascript:soundClicked('sound5')"></rect>
+           //Fragezeichen1
+      </a>
+       <a xlink:href="#6">
+        <rect x="823" y="158" fill="#fff" opacity="0" width="50" height="50" onclick="javascript:soundClicked('sound6')"></rect>
+           //Fragezeichen2
+      </a>
+      <a xlink:href="19-Zickzack-Gesamt-mit-Erklärungen.html"> <rect x="832" y="22" fill="#fff" opacity="0" width="50" height="50"></rect>
+          //Infoseite
+      </a>
+
+    </svg>
+    <audio id="sound0"><source src="Zickzack-Text.mp3"  type="audio/mpeg"> Your browser does not support the audio element. </audio>
+    <audio id="sound1"><source src="Zickzack-Musik.mp3" type="audio/mpeg"></audio>
+    <audio id="sound2"><source src="Zickzack-Text-Hausaufgabe.mp3" type="audio/mpeg"></audio>                                                                               
+    <audio id="sound3"><source src="Zickzack-Hund.mp3" type="audio/mpeg"></audio>
+    <audio id="sound4" onended="this.children[0].src='Zickzack-Hasen-2.mp3'; this.load()"><source src="Zickzack-Hasen-1.mp3" type="audio/mpeg">  
+        Your browser does not support the audio element. </audio>    
+    <audio id="sound5" onended="this.children[0].src='Zickzack-Fragezeichen-1_2.mp3'; this.load()"><source src="Zickzack-Fragezeichen-1_1.mp3" type="audio/mpeg"> 
+        Your browser does not support the audio element. </audio>                                                                                
+    <audio id="sound6" onended="this.children[0].src='Zickzack-Fragezeichen-2_2.mp3'; this.load()"><source src="Zickzack-Fragezeichen-2_1.mp3" type="audio/mpeg"> 
+        Your browser does not support the audio element. </audio>                                                                                                                                          
+  </body>
+</html>
+
+
