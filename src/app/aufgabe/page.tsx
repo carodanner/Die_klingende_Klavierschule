@@ -1,4 +1,5 @@
 import { loadTasks } from "@/lib/contentful/apis/tasks-api";
+import Link from "next/link";
 import React from "react";
 
 export default async function Page() {
@@ -9,7 +10,9 @@ export default async function Page() {
       {tasks.map((task) => (
         <div key={task.id}>
           <h2>{task.name}</h2>
-          <p>{task.slug}</p>
+          <p>
+            <Link href={`/aufgabe/${task.slug}`}>{task.slug}</Link>
+          </p>
         </div>
       ))}
     </>
