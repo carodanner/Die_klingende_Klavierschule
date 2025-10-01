@@ -10,7 +10,7 @@ export async function generateStaticParams() {
 
   const allParams = await Promise.all(
     taskLists.map((list) => ({
-      slug: list.slug,
+      listSlug: list.slug,
     }))
   );
 
@@ -20,11 +20,11 @@ export async function generateStaticParams() {
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ listSlug: string }>;
 }) {
-  const { slug } = await params;
+  const { listSlug } = await params;
 
-  const [taskList] = await Promise.all([loadTaskListBySlug(slug)]);
+  const [taskList] = await Promise.all([loadTaskListBySlug(listSlug)]);
 
   if (!taskList) {
     notFound();
@@ -38,7 +38,9 @@ export default async function Page({
         <div key={index}>
           <h2>{task.name}</h2>
           <p>
-            <Link href={`/aufgabe/${task.slug}`}>{task.slug}</Link>
+            <Link href={`/aufgabenListe/${taskList.slug}/aufgabe/${task.slug}`}>
+              Zur Aufgabe springen
+            </Link>
           </p>
         </div>
       ))}
