@@ -21,22 +21,20 @@ export default function ClickAreaView({ clickArea, preview }: ClickAreaViewProps
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       setIsPlaying(false);
+      setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
       return;
     }
 
-    // Get the next sound to play
     const soundToPlay = clickArea.sounds[currentSoundIndex];
     if (!soundToPlay) return;
 
-    // Create new audio element
     const audio = new Audio(soundToPlay.url);
     audioRef.current = audio;
 
-    // Set up event listeners
+    // Event listeners
     audio.onplay = () => setIsPlaying(true);
     audio.onended = () => {
       setIsPlaying(false);
-      // Move to next sound for next click
       setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
     };
     audio.onerror = (error) => {
