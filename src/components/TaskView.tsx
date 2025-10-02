@@ -19,12 +19,12 @@ export default function TaskView({ task, preview }: TaskViewProps) {
         <Image
           src={task.image.url ?? ""}
           alt={task.name}
-          width={893}
-          height={500}
+          width={task.imageWidth ?? 893}
+          height={task.imageHeight ?? 500}
           style={{ display: "block" }}
         />
       )}
-    
+
       {task.simpleInteractions.map((area) => (
         <ClickAreaView key={area.id} clickArea={area} preview={preview} />
       ))}

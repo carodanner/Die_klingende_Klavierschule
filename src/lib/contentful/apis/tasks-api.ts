@@ -8,13 +8,19 @@ export type Task = {
   name: string;
   slug: string;
   image?: AssetWrapper;
+  imageHeight?: number;
+  imageWidth?: number;
+  shortDescription?: string;
   simpleInteractions: ClickArea[];
 };
 
 type TaskFields = {
-  name: Record<string, string>;
-  slug: Record<string, string>;
+  name: string;
+  slug: string;
   image: Asset;
+  imageHeight: number;
+  imageWidth: number;
+  shortDescription: string;
   simpleInteractions: Array<Entry<ClickAreaSkeleton>>;
 };
 
@@ -69,6 +75,9 @@ export function mapToTask(
     name: entry.fields.name,
     slug: entry.fields.slug,
     image: extractAsset(entry.fields.image),
+    imageHeight: entry.fields.imageHeight,
+    imageWidth: entry.fields.imageWidth,
+    shortDescription: entry.fields.shortDescription,
     simpleInteractions: clickAreas,
   };
 }

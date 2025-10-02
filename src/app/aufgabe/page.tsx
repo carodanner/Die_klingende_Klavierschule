@@ -11,7 +11,10 @@ export default async function Page() {
         <div key={task.id}>
           <h2>{task.name}</h2>
           <p>
-            <Link href={`/aufgabe/${task.slug}`}>{task.slug}</Link>
+            {task.shortDescription ?? "Beschreibung fehlt"}
+            <br />
+            <br />
+            <Link href={`/aufgabe/${task.slug}`}>Zur Aufgabe</Link>
           </p>
         </div>
       ))}

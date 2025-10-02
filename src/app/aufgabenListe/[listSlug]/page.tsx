@@ -38,6 +38,9 @@ export default async function Page({
         <div key={index}>
           <h2>{task.name}</h2>
           <p>
+            {task.shortDescription ?? "Beschreibung fehlt"}
+            <br />
+            <br />
             <Link href={`/aufgabenListe/${taskList.slug}/aufgabe/${task.slug}`}>
               Zur Aufgabe springen
             </Link>
