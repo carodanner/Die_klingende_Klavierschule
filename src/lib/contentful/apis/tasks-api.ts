@@ -1,13 +1,13 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
 import { getEntries } from "../client";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
-import { extractImage, ImageWrapper } from "./image-api";
+import { AssetWrapper, extractAsset } from "./asset-api";
 
 export type Task = {
   id: string;
   name: string;
   slug: string;
-  image?: ImageWrapper;
+  image?: AssetWrapper;
   simpleInteractions: ClickArea[];
 };
 
@@ -68,7 +68,7 @@ export function mapToTask(
     id: entry.sys.id,
     name: entry.fields.name,
     slug: entry.fields.slug,
-    image: extractImage(entry.fields.image),
+    image: extractAsset(entry.fields.image),
     simpleInteractions: clickAreas,
   };
 }

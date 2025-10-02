@@ -22,10 +22,14 @@ export async function generateStaticParams() {
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ listSlug: string; taskSlug: string }>;
+  searchParams: Promise<{ preview: string }>;
 }) {
   const { listSlug, taskSlug } = await params;
+  const { preview } = await searchParams;
+  const isPreview = preview === "true";
 
   const [taskList] = await Promise.all([loadTaskListBySlug(listSlug)]);
 
@@ -43,7 +47,7 @@ export default async function Page({
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">{task.name}</h1>
-      <TaskView task={task} preview={true} />
+      <TaskView task={task} preview={isPreview} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Task } from "@/lib/contentful/apis/tasks-api";
+import ClickAreaView from "./ClickAreaView";
 type TaskViewProps = {
   task: Task;
   preview?: boolean;
@@ -23,22 +24,9 @@ export default function TaskView({ task, preview }: TaskViewProps) {
           style={{ display: "block" }}
         />
       )}
-      {/* Render clickable areas */}
+    
       {task.simpleInteractions.map((area) => (
-        <div
-          key={area.id}
-          style={{
-            position: "absolute",
-            left: area.x,
-            top: area.y,
-            width: area.width,
-            height: area.height,
-            border: preview ? "2px dashed red" : "none",
-            cursor: "pointer",
-            background: preview ? "rgba(255,0,0,0.1)" : "transparent",
-          }}
-          title={area.name}
-        />
+        <ClickAreaView key={area.id} clickArea={area} preview={preview} />
       ))}
     </div>
   );

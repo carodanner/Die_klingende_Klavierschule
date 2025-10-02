@@ -1,5 +1,5 @@
 import { Asset, Entry, EntrySkeletonType } from "contentful";
-import { extractSounds, SoundWrapper } from "./sounds-api";
+import { AssetWrapper, extractAssets } from "./asset-api";
 
 export type ClickArea = {
   id: string;
@@ -8,7 +8,7 @@ export type ClickArea = {
   y: number;
   width: number;
   height: number;
-  sounds: SoundWrapper[];
+  sounds: AssetWrapper[];
 };
 
 type ClickAreaFields = {
@@ -34,6 +34,6 @@ export function mapToClickArea(
     y: entry.fields.y,
     width: entry.fields.width,
     height: entry.fields.height,
-    sounds: extractSounds(entry.fields.sounds),
+    sounds: extractAssets(entry.fields.sounds),
   };
 }
