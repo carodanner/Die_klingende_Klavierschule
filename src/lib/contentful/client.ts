@@ -27,7 +27,7 @@ const client = createClient({
 
 export async function getEntries<
   T extends EntrySkeletonType,
-  Q extends EntriesQueries<T, undefined> = EntriesQueries<T, undefined>
+  Q extends EntriesQueries<T, undefined> = EntriesQueries<T, undefined>,
 >(query: Q): Promise<ContentfulCollection<Entry<T, undefined, string>>> {
   const type = getTypeFromQuery(query);
 
@@ -110,7 +110,7 @@ async function loadJsonFromCache<T>(
 
 async function loadEntriesJsonFromCache<
   T extends EntrySkeletonType,
-  Q extends EntriesQueries<T, undefined> = EntriesQueries<T, undefined>
+  Q extends EntriesQueries<T, undefined> = EntriesQueries<T, undefined>,
 >(
   type: string,
   query: Q

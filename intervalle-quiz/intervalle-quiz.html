@@ -1,19 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Klavierschule Quiz Beispiel</title>
     <script>
       var numberOfQuestions = 6;
-      var answers = ['sekunde', 'terz', 'quarte', 'quinte'];
+      var answers = ["sekunde", "terz", "quarte", "quinte"];
       var soundKeyToAudioIds = {
-        'sekunde' : ['sekunde 1', 'sekunde 2', 'sekunde 3', 'sekunde 4'], 
-        'terz': ['terz 1', 'terz 2', 'terz 3', 'terz 4'], 
-        'quarte': ['quarte 1', 'quarte 2', 'quarte 3', 'quarte 4'], 
-        'quinte': ['quinte 1', 'quinte 2', 'quinte 3', 'quinte 4'],
-        'richtig': ['richtig1', 'richtig2', 'richtig3', 'richtig4', 'richtig5'],
-        'falsch': ['falsch1', 'falsch2', 'falsch3', 'falsch4', 'falsch5', 'falsch6'],
-        'text': ['text1'],
-      }
+        sekunde: ["sekunde 1", "sekunde 2", "sekunde 3", "sekunde 4"],
+        terz: ["terz 1", "terz 2", "terz 3", "terz 4"],
+        quarte: ["quarte 1", "quarte 2", "quarte 3", "quarte 4"],
+        quinte: ["quinte 1", "quinte 2", "quinte 3", "quinte 4"],
+        richtig: ["richtig1", "richtig2", "richtig3", "richtig4", "richtig5"],
+        falsch: [
+          "falsch1",
+          "falsch2",
+          "falsch3",
+          "falsch4",
+          "falsch5",
+          "falsch6",
+        ],
+        text: ["text1"],
+      };
 
       var soundKeyToAudioIdIndex;
       var currentQuestionIndex = -1;
@@ -24,11 +31,10 @@
       generateRandomAnswers();
 
       function generateRandomAnswers() {
-
         correctAnswers = Array(numberOfQuestions);
         questionAudioIds = Array(numberOfQuestions);
-        
-        for (i=0; i<numberOfQuestions; i++) {
+
+        for (i = 0; i < numberOfQuestions; i++) {
           var randomAnswerIndex = Math.floor(Math.random() * answers.length);
           var answer = answers[randomAnswerIndex];
           correctAnswers[i] = answer;
@@ -42,19 +48,20 @@
       function rotatingAudioIdFor(soundKey) {
         var audioIds = soundKeyToAudioIds[soundKey];
         var audioId = audioIds[soundKeyToAudioIdIndex[soundKey]];
-        soundKeyToAudioIdIndex[soundKey] = (soundKeyToAudioIdIndex[soundKey] + 1) % audioIds.length;
+        soundKeyToAudioIdIndex[soundKey] =
+          (soundKeyToAudioIdIndex[soundKey] + 1) % audioIds.length;
         return audioId;
       }
 
       function shuffleAudioIds() {
         var soundKeys = Object.keys(soundKeyToAudioIds);
         soundKeyToAudioIdIndex = Array(soundKeys.length);
-        for (x=0; x<soundKeys.length; x++) {
+        for (x = 0; x < soundKeys.length; x++) {
           var soundKey = soundKeys[x];
           soundKeyToAudioIdIndex[soundKey] = 0;
           shuffle(soundKeyToAudioIds[soundKey]);
         }
-      }  
+      }
 
       function shuffle(array) {
         for (i = array.length - 1; i > 0; i--) {
@@ -66,58 +73,67 @@
       }
 
       function clickedAnswer(element) {
-        var answer = element.parentElement.getAttributeNS("http://www.w3.org/1999/xlink", "href").substring(1);
+        var answer = element.parentElement
+          .getAttributeNS("http://www.w3.org/1999/xlink", "href")
+          .substring(1);
         if (currentQuestionIndex == -1) {
           restartQuiz();
         } else {
           if (!isAnySoundAlreadyPlaying()) {
             if (correctAnswers[currentQuestionIndex] === answer) {
               currentQuestionIndex++;
-              var finishedLastQuestion = currentQuestionIndex === numberOfQuestions;
+              var finishedLastQuestion =
+                currentQuestionIndex === numberOfQuestions;
               if (finishedLastQuestion) {
                 currentQuestionIndex = -1;
-                playSounds(['alles-geschafft']);
+                playSounds(["alles-geschafft"]);
               } else {
-                playSounds([rotatingAudioIdFor('richtig'), questionAudioIds[currentQuestionIndex]]);
+                playSounds([
+                  rotatingAudioIdFor("richtig"),
+                  questionAudioIds[currentQuestionIndex],
+                ]);
               }
             } else {
-              playSounds([rotatingAudioIdFor('falsch'), questionAudioIds[currentQuestionIndex]]); 
+              playSounds([
+                rotatingAudioIdFor("falsch"),
+                questionAudioIds[currentQuestionIndex],
+              ]);
             }
           }
         }
-      } 
+      }
 
       function restartQuiz() {
-        if (!isAnySoundAlreadyPlaying()) { 
-          generateRandomAnswers(numberOfQuestions)
-          playSounds(['quiz', questionAudioIds[0]]); 
+        if (!isAnySoundAlreadyPlaying()) {
+          generateRandomAnswers(numberOfQuestions);
+          playSounds(["quiz", questionAudioIds[0]]);
         }
       }
 
       function playSounds(audioIds) {
-        console.log("play")
-        console.log(audioIds)
+        console.log("play");
+        console.log(audioIds);
         var playerElement = document.getElementById("player");
         var soundToPlay = document.getElementById(audioIds[0]);
-        playerElement.firstElementChild.src = soundToPlay.firstElementChild.src
+        playerElement.firstElementChild.src = soundToPlay.firstElementChild.src;
         playerElement.load();
         var onended;
         if (audioIds.length > 1) {
           var allRemainingAudioIds = audioIds.slice(1);
           onended = "playSounds(['" + allRemainingAudioIds.join("', '") + "'])";
-          if (audioIds[0] === 'quiz') {
-            onended = onended + ";currentQuestionIndex = 0;"
+          if (audioIds[0] === "quiz") {
+            onended = onended + ";currentQuestionIndex = 0;";
           }
         } else {
           onended = "";
         }
-        player.setAttribute('onended', onended);
+        player.setAttribute("onended", onended);
         player.play();
-      } 
+      }
 
       function isAnySoundAlreadyPlaying() {
-        var allAudioElements = document.getElementsByTagName('audio');
-        for (var i=0; i<allAudioElements.length; i++) {
+        var allAudioElements = document.getElementsByTagName("audio");
+        for (var i = 0; i < allAudioElements.length; i++) {
           // when there is already another (or the same) sound playing do not interrupt it
           if (!allAudioElements[i].paused) {
             return true;
@@ -129,59 +145,125 @@
   </head>
   <body>
     <!-- Autoplay does not work in Chrome as intended by policy (https://stackoverflow.com/questions/50490304/how-to-make-audio-autoplay-on-chrome) -->
-    <audio id="player" autoplay onended="javascript:playSounds([questionAudioIds[0]]);currentQuestionIndex = 0;">
-      <source src="Intervalle-Spiel-Start.mp3" type="audio/mpeg"> Your browser does not support the audio element. 
+    <audio
+      id="player"
+      autoplay
+      onended="javascript:playSounds([questionAudioIds[0]]);currentQuestionIndex = 0;"
+    >
+      <source src="Intervalle-Spiel-Start.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
     </audio>
-    <audio id="quiz"> <source src="Intervalle-Spiel-Start.mp3" type="audio/mpeg">s </audio>
-    <audio id="sekunde 1"><source src="Sekunde 1.mp3" type="audio/mpeg"></audio>
-    <audio id="sekunde 2"><source src="Sekunde 2.mp3" type="audio/mpeg"></audio>
-    <audio id="sekunde 3"><source src="Sekunde 3.mp3" type="audio/mpeg"></audio>
-    <audio id="sekunde 4"><source src="Sekunde 4.mp3" type="audio/mpeg"></audio>
-    <audio id="terz 1"><source src="Terz 1.mp3" type="audio/mpeg"></audio>
-    <audio id="terz 2"><source src="Terz 2.mp3" type="audio/mpeg"></audio>
-    <audio id="terz 3"><source src="Terz 3.mp3" type="audio/mpeg"></audio>
-    <audio id="terz 4"><source src="Terz 4.mp3" type="audio/mpeg"></audio>
-    <audio id="quarte 1"><source src="Quarte 1.mp3" type="audio/mpeg"></audio>
-    <audio id="quarte 2"><source src="Quarte 2.mp3" type="audio/mpeg"></audio>
-    <audio id="quarte 3"><source src="Quarte 3.mp3" type="audio/mpeg"></audio>
-    <audio id="quarte 4"><source src="Quarte 4.mp3" type="audio/mpeg"></audio>
-    <audio id="quinte 1"><source src="Quinte 1.mp3" type="audio/mpeg"></audio>
-    <audio id="quinte 2"><source src="Quinte 2.mp3" type="audio/mpeg"></audio>
-    <audio id="quinte 3"><source src="Quinte 3.mp3" type="audio/mpeg"></audio>
-    <audio id="quinte 4"><source src="Quinte 4.mp3" type="audio/mpeg"></audio>
-    <audio id="richtig1"><source src="richtig1.mp3" type="audio/mpeg"></audio>
-    <audio id="richtig2"><source src="richtig2.mp3" type="audio/mpeg"></audio>
-    <audio id="richtig3"><source src="richtig3.mp3" type="audio/mpeg"></audio>
-    <audio id="richtig4"><source src="richtig4.mp3" type="audio/mpeg"></audio>
-    <audio id="richtig5"><source src="richtig.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch1"><source src="falsch1.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch2"><source src="falsch2.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch3"><source src="falsch3.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch4"><source src="falsch4.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch5"><source src="falsch5.mp3" type="audio/mpeg"></audio>
-    <audio id="falsch6"><source src="falsch.mp3" type="audio/mpeg"></audio>
-    <audio id="alles-geschafft"><source src="Alles richtig.mp3" type="audio/mpeg"></audio>
-    <audio id="text1"><source src="Intervalle-Spiel-Text.mp3" type="audio/mpeg"></audio>
-    
+    <audio id="quiz">
+      <source src="Intervalle-Spiel-Start.mp3" type="audio/mpeg" />
+      s
+    </audio>
+    <audio id="sekunde 1">
+      <source src="Sekunde 1.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="sekunde 2">
+      <source src="Sekunde 2.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="sekunde 3">
+      <source src="Sekunde 3.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="sekunde 4">
+      <source src="Sekunde 4.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="terz 1"><source src="Terz 1.mp3" type="audio/mpeg" /></audio>
+    <audio id="terz 2"><source src="Terz 2.mp3" type="audio/mpeg" /></audio>
+    <audio id="terz 3"><source src="Terz 3.mp3" type="audio/mpeg" /></audio>
+    <audio id="terz 4"><source src="Terz 4.mp3" type="audio/mpeg" /></audio>
+    <audio id="quarte 1"><source src="Quarte 1.mp3" type="audio/mpeg" /></audio>
+    <audio id="quarte 2"><source src="Quarte 2.mp3" type="audio/mpeg" /></audio>
+    <audio id="quarte 3"><source src="Quarte 3.mp3" type="audio/mpeg" /></audio>
+    <audio id="quarte 4"><source src="Quarte 4.mp3" type="audio/mpeg" /></audio>
+    <audio id="quinte 1"><source src="Quinte 1.mp3" type="audio/mpeg" /></audio>
+    <audio id="quinte 2"><source src="Quinte 2.mp3" type="audio/mpeg" /></audio>
+    <audio id="quinte 3"><source src="Quinte 3.mp3" type="audio/mpeg" /></audio>
+    <audio id="quinte 4"><source src="Quinte 4.mp3" type="audio/mpeg" /></audio>
+    <audio id="richtig1"><source src="richtig1.mp3" type="audio/mpeg" /></audio>
+    <audio id="richtig2"><source src="richtig2.mp3" type="audio/mpeg" /></audio>
+    <audio id="richtig3"><source src="richtig3.mp3" type="audio/mpeg" /></audio>
+    <audio id="richtig4"><source src="richtig4.mp3" type="audio/mpeg" /></audio>
+    <audio id="richtig5"><source src="richtig.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch1"><source src="falsch1.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch2"><source src="falsch2.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch3"><source src="falsch3.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch4"><source src="falsch4.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch5"><source src="falsch5.mp3" type="audio/mpeg" /></audio>
+    <audio id="falsch6"><source src="falsch.mp3" type="audio/mpeg" /></audio>
+    <audio id="alles-geschafft">
+      <source src="Alles richtig.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="text1">
+      <source src="Intervalle-Spiel-Text.mp3" type="audio/mpeg" />
+    </audio>
+
     <div style="vertical-align: top; display: block">
-      <img src="Playsymbol.jpg" onclick="javascript:playSounds(['text1'])" style="vertical-align: top; width: 60px; display: inline-block">
-      <img src="Spielstart.jpg" onclick="javascript:restartQuiz()" style="vertical-align: top; width: 60px; display: inline-block">
+      <img
+        src="Playsymbol.jpg"
+        onclick="javascript:playSounds(['text1'])"
+        style="vertical-align: top; width: 60px; display: inline-block"
+      />
+      <img
+        src="Spielstart.jpg"
+        onclick="javascript:restartQuiz()"
+        style="vertical-align: top; width: 60px; display: inline-block"
+      />
     </div>
-    
+
     <!-- SVG Generated by https://imagemapper.noc.io/ -->
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 670 1072" style="max-width: 10cm">
-      <image width="670" height="1072" xlink:href="esel.png"></image> 
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 670 1072"
+      style="max-width: 10cm"
+    >
+      <image width="670" height="1072" xlink:href="esel.png"></image>
       <a xlink:href="#quinte">
-        <rect x="139" y="65" fill="#fff" opacity="0" width="151" height="147" onclick="clickedAnswer(this)"></rect>
+        <rect
+          x="139"
+          y="65"
+          fill="#fff"
+          opacity="0"
+          width="151"
+          height="147"
+          onclick="clickedAnswer(this)"
+        ></rect>
       </a>
       <a xlink:href="#terz">
-        <rect x="33" y="209" fill="#fff" opacity="0" width="153" height="151" onclick="clickedAnswer(this)"></rect>
+        <rect
+          x="33"
+          y="209"
+          fill="#fff"
+          opacity="0"
+          width="153"
+          height="151"
+          onclick="clickedAnswer(this)"
+        ></rect>
       </a>
       <a xlink:href="#sekunde">
-        <rect x="373" y="41" fill="#fff" opacity="0" width="145" height="141" onclick="clickedAnswer(this)"></rect>
+        <rect
+          x="373"
+          y="41"
+          fill="#fff"
+          opacity="0"
+          width="145"
+          height="141"
+          onclick="clickedAnswer(this)"
+        ></rect>
       </a>
       <a xlink:href="#quarte">
-        <rect x="485" y="272" fill="#fff" opacity="0" width="155" height="152" onclick="clickedAnswer(this)"></rect>
+        <rect
+          x="485"
+          y="272"
+          fill="#fff"
+          opacity="0"
+          width="155"
+          height="152"
+          onclick="clickedAnswer(this)"
+        ></rect>
       </a>
     </svg>
   </body>
