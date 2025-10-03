@@ -3,7 +3,7 @@ import {
   loadTaskListBySlug,
   loadTaskLists,
 } from "@/lib/contentful/apis/tasksList-api";
-import Link from "next/link";
+import TaskPreview from "@/components/TaskPreview";
 
 export async function generateStaticParams() {
   const taskLists = await loadTaskLists();
@@ -35,17 +35,7 @@ export default async function Page({
       <h1 className="text-2xl font-bold mb-4">{taskList.name}</h1>
 
       {taskList.tasks.map((task, index) => (
-        <div key={index}>
-          <h2>{task.name}</h2>
-          <p>
-            {task.shortDescription ?? "Beschreibung fehlt"}
-            <br />
-            <br />
-            <Link href={`/aufgabenListe/${taskList.slug}/aufgabe/${task.slug}`}>
-              Zur Aufgabe springen
-            </Link>
-          </p>
-        </div>
+        <TaskPreview key={index} task={task} shrinkToWidth={300} />
       ))}
     </>
   );

@@ -1,5 +1,5 @@
+import TaskPreview from "@/components/TaskPreview";
 import { loadTasks } from "@/lib/contentful/apis/tasks-api";
-import Link from "next/link";
 import React from "react";
 
 export default async function Page() {
@@ -8,15 +8,7 @@ export default async function Page() {
   return (
     <>
       {tasks.map((task) => (
-        <div key={task.id}>
-          <h2>{task.name}</h2>
-          <p>
-            {task.shortDescription ?? "Beschreibung fehlt"}
-            <br />
-            <br />
-            <Link href={`/aufgabe/${task.slug}`}>Zur Aufgabe</Link>
-          </p>
-        </div>
+        <TaskPreview key={task.id} task={task} shrinkToWidth={300} />
       ))}
     </>
   );
