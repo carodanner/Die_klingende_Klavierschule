@@ -1,6 +1,7 @@
 import React from "react";
-import Link from "next/link";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -10,14 +11,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header style={{ padding: "1rem", background: "#f5f5f5" }}>
-          <h1>Klingende Klavierschule</h1>
-        </header>
-        <nav style={{ padding: "1rem", background: "#e0e0e0" }}>
-          <Link href="/">Home</Link> | <Link href="/aufgabe">Aufgaben</Link> |{" "}
-          <Link href="/aufgabenListe">Aufgaben Listen</Link>
-        </nav>
-        <main style={{ padding: "2rem" }}>{children}</main>
+        <div className="min-h-screen flex flex-col">
+          <div className="max-w-7xl mx-auto w-full">
+            <Header />
+          </div>
+          <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

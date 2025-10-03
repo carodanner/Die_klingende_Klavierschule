@@ -34,9 +34,11 @@ export default async function Page({
     <>
       <h1 className="text-2xl font-bold mb-4">{taskList.name}</h1>
 
-      {taskList.tasks.map((task, index) => (
-        <TaskPreview key={index} task={task} shrinkToWidth={300} />
-      ))}
+      <div className="flex flex-wrap gap-5 justify-center">
+        {taskList.tasks.map((task, index) => (
+          <TaskPreview key={index} task={task} shrinkToWidth={300} />
+        ))}
+      </div>
     </>
   );
 }

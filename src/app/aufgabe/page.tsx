@@ -6,7 +6,7 @@ export default async function Page() {
   const tasks = await loadTasks();
 
   return (
-    <div className="flex flex-wrap gap-3 justify-center md:justify-start md:ml-4">
+    <div className="flex flex-wrap gap-5 justify-center">
       {tasks.map((task) => (
         <TaskPreview key={task.id} task={task} shrinkToWidth={300} />
       ))}

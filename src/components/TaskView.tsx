@@ -7,7 +7,6 @@ type TaskViewProps = {
 };
 
 export default function TaskView({ task, preview }: TaskViewProps) {
-  console.log(`image url: ${task.image?.url}`);
   return (
     <div
       style={{

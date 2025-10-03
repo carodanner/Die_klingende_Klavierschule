@@ -6,12 +6,14 @@ export type TaskList = {
   id: string;
   name: string;
   slug: string;
+  shortDescription?: string;
   tasks: Task[];
 };
 
 type TaskListFields = {
   name: string;
   slug: string;
+  shortDescription: string;
   tasks: Array<Entry<TaskSkeleton>>;
 };
 
@@ -67,6 +69,7 @@ function mapToTaskList(
     id: entry.sys.id,
     name: entry.fields.name,
     slug: entry.fields.slug,
+    shortDescription: entry.fields.shortDescription,
     tasks: tasks,
   };
 }
