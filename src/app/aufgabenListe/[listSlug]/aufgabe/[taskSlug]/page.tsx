@@ -57,7 +57,6 @@ export default async function Page({
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">{task.name}</h1>
       <TaskView task={task} preview={isPreview} />
       <div className="flex justify-between items-center mt-8">
         {prevTask ? (
@@ -77,7 +76,7 @@ export default async function Page({
             className="flex items-center gap-2 mr-5"
           >
             <span className="text-2xl font-bold">Weiter</span>
-            <ArrowLongRightIcon className="w-12 h-12" />
+            <ArrowLongRightIcon className="w-12 h-12 font-bold" />
           </a>
         ) : (
           <div />
