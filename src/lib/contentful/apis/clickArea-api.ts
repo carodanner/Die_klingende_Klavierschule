@@ -12,7 +12,7 @@ export type ClickArea = {
 };
 
 type ClickAreaFields = {
-  name: Record<string, string>;
+  name: string;
   x: number;
   y: number;
   width: number;

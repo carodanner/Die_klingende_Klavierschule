@@ -9,13 +9,13 @@ export type TaskList = {
   tasks: Task[];
 };
 
-type TaskFields = {
+type TaskListFields = {
   name: string;
   slug: string;
   tasks: Array<Entry<TaskSkeleton>>;
 };
 
-export type TaskListSkeleton = EntrySkeletonType<TaskFields, "taskList">;
+export type TaskListSkeleton = EntrySkeletonType<TaskListFields, "taskList">;
 
 type Query = EntriesQueries<TaskListSkeleton, undefined> & {
   [key: string]: unknown;
