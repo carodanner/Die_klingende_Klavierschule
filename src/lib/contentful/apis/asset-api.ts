@@ -15,7 +15,7 @@ export function extractAssets(assets?: Asset[]): AssetWrapper[] {
   if (!assets || !Array.isArray(assets)) {
     return [];
   }
-  
+
   return assets
     .map(extractAsset)
     .filter((asset): asset is AssetWrapper => asset !== undefined);

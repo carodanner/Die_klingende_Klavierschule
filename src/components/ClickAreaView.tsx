@@ -8,7 +8,10 @@ type ClickAreaViewProps = {
   preview?: boolean;
 };
 
-export default function ClickAreaView({ clickArea, preview }: ClickAreaViewProps) {
+export default function ClickAreaView({
+  clickArea,
+  preview,
+}: ClickAreaViewProps) {
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -39,7 +42,9 @@ export default function ClickAreaView({ clickArea, preview }: ClickAreaViewProps
     };
     audio.onerror = (error) => {
       setIsPlaying(false);
-      console.error(`Failed to play sound: ${soundToPlay.url}, error: ${error}`);
+      console.error(
+        `Failed to play sound: ${soundToPlay.url}, error: ${error}`
+      );
     };
 
     // Play the sound
