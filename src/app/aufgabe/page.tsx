@@ -8,7 +8,12 @@ export default async function Page() {
   return (
     <div className="flex flex-wrap gap-5 justify-center">
       {tasks.map((task) => (
-        <TaskPreview key={task.id} task={task} shrinkToWidth={300} />
+        <TaskPreview
+          key={task.id}
+          task={task}
+          shrinkToWidth={300}
+          urlPrefix=""
+        />
       ))}
     </div>
   );

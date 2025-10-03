@@ -9,10 +9,11 @@ type TaskViewProps = {
 export default function TaskView({ task, preview }: TaskViewProps) {
   return (
     <div
+      className="mx-auto block"
       style={{
         position: "relative",
-        width: 893,
-        height: 500,
+        width: task.imageWidth ?? 893,
+        height: task.imageHeight ?? 500,
       }}
     >
       {task.image?.url && (

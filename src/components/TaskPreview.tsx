@@ -6,9 +6,14 @@ import { ChevronRightIcon } from "@heroicons/react/24/solid";
 type TaskViewProps = {
   task: Task;
   shrinkToWidth: number;
+  urlPrefix: string;
 };
 
-export default function TaskPreview({ task, shrinkToWidth }: TaskViewProps) {
+export default function TaskPreview({
+  task,
+  shrinkToWidth,
+  urlPrefix,
+}: TaskViewProps) {
   let imageHeight = shrinkToWidth;
   if (task.imageWidth && task.imageHeight) {
     imageHeight = (task.imageHeight / task.imageWidth) * shrinkToWidth;
@@ -58,7 +63,7 @@ export default function TaskPreview({ task, shrinkToWidth }: TaskViewProps) {
         </div>
 
         <Link
-          href={`/aufgabe/${task.slug}`}
+          href={`${urlPrefix}/aufgabe/${task.slug}`}
           className="mt-auto hover:underline flex items-center gap-1"
           style={{
             textAlign: "left",
