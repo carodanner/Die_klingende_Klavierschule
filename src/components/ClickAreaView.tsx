@@ -2,6 +2,7 @@
 
 import { ClickArea } from "@/lib/contentful/apis/clickArea-api";
 import { useState, useRef } from "react";
+import { useAudio } from "@/contexts/AudioContext";
 
 type ClickAreaViewProps = {
   clickArea: ClickArea;
@@ -15,11 +16,12 @@ export default function ClickAreaView({
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playAudio } = useAudio();
 
   const handleClick = () => {
     if (clickArea.sounds.length === 0) return;
 
-    // If audio is currently playing, stop it
+    // If audio is currently playing, stop it and cycle to next sound
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -34,7 +36,7 @@ export default function ClickAreaView({
     const audio = new Audio(soundToPlay.url);
     audioRef.current = audio;
 
-    // Event listeners
+    // Set up event listeners
     audio.onplay = () => setIsPlaying(true);
     audio.onended = () => {
       setIsPlaying(false);
@@ -47,10 +49,10 @@ export default function ClickAreaView({
       );
     };
 
-    // Play the sound
-    audio.play().catch((error) => {
+    // Use the global audio manager to play the sound
+    playAudio(audio, () => {
       setIsPlaying(false);
-      console.error(`Error playing sound: ${soundToPlay.url}, error: ${error}`);
+      setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
     });
   };
 

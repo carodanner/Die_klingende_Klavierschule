@@ -43,9 +43,7 @@ export function mapToTrueFalseGame(
 
   let questions: Question[] = [];
   if (Array.isArray(entry.fields?.questions)) {
-    questions = (
-      entry.fields.questions as Array<Entry<QuestionSkeleton>>
-    )
+    questions = (entry.fields.questions as Array<Entry<QuestionSkeleton>>)
       .map((entry) =>
         mapToQuestion(entry as Entry<QuestionSkeleton, undefined, string>)
       )

@@ -5,8 +5,8 @@ import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
 export type Question = {
   id: string;
   name: string;
-  question: AssetWrapper; 
-  correctAnswers: ClickArea[]; 
+  question: AssetWrapper;
+  correctAnswers: ClickArea[];
 };
 
 type QuestionFields = {
@@ -26,12 +26,16 @@ export function mapToQuestion(
 
   const correctAnswers: ClickArea[] = [];
   if (Array.isArray(fields.correctAnswers)) {
-    (fields.correctAnswers as Array<Entry<ClickAreaSkeleton>>).forEach((clickAreaEntry) => {
-      const clickArea = mapToClickArea(clickAreaEntry as Entry<ClickAreaSkeleton, undefined, string>);
-      if (clickArea) {
-        correctAnswers.push(clickArea);
+    (fields.correctAnswers as Array<Entry<ClickAreaSkeleton>>).forEach(
+      (clickAreaEntry) => {
+        const clickArea = mapToClickArea(
+          clickAreaEntry as Entry<ClickAreaSkeleton, undefined, string>
+        );
+        if (clickArea) {
+          correctAnswers.push(clickArea);
+        }
       }
-    });
+    );
   }
 
   const questionAsset = extractAsset(fields.question);

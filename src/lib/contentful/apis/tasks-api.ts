@@ -1,7 +1,11 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
 import { getEntries } from "../client";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
-import { TrueFalseGame, TrueFalseGameSkeleton, mapToTrueFalseGame } from "./trueFalseGame-api";
+import {
+  TrueFalseGame,
+  TrueFalseGameSkeleton,
+  mapToTrueFalseGame,
+} from "./trueFalseGame-api";
 import { AssetWrapper, extractAsset } from "./asset-api";
 
 export type Task = {
@@ -81,7 +85,9 @@ export function mapToTask(
       entry.fields.trueFalseGames as Array<Entry<TrueFalseGameSkeleton>>
     )
       .map((entry) =>
-        mapToTrueFalseGame(entry as Entry<TrueFalseGameSkeleton, undefined, string>)
+        mapToTrueFalseGame(
+          entry as Entry<TrueFalseGameSkeleton, undefined, string>
+        )
       )
       .filter((game): game is TrueFalseGame => game !== undefined);
   }

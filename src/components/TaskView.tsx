@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
 import { ArrowsPointingOutIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { AudioProvider } from "@/contexts/AudioContext";
 
 type TaskViewProps = {
   task: Task;
@@ -39,7 +40,7 @@ export default function TaskView({ task, preview }: TaskViewProps) {
   );
 
   return (
-    <>
+    <AudioProvider>
       <div className="flex items-center gap-2 mb-4">
         <span className="text-2xl font-bold">{task.name}</span>
         <button
@@ -75,6 +76,6 @@ export default function TaskView({ task, preview }: TaskViewProps) {
           </div>
         </div>
       )}
-    </>
+    </AudioProvider>
   );
 }
