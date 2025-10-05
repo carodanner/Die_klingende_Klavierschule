@@ -8,6 +8,7 @@ export type TrueFalseGame = {
   name: string;
   start: ClickArea;
   questions: Question[];
+  answerAreas: ClickArea[];
   successSound?: AssetWrapper;
   errorSounds: AssetWrapper[];
   correctAnswerSounds: AssetWrapper[];
@@ -17,6 +18,7 @@ type TrueFalseGameFields = {
   name: string;
   start?: Entry<ClickAreaSkeleton>;
   questions?: Array<Entry<QuestionSkeleton>>;
+  answerAreas?: Array<Entry<ClickAreaSkeleton>>;
   successSound?: Asset;
   errorSounds?: Asset[];
   correctAnswerSounds?: Asset[];
@@ -50,11 +52,19 @@ export function mapToTrueFalseGame(
       .filter((question): question is Question => question !== undefined);
   }
 
+  let answerAreas: ClickArea[] = [];
+  if (Array.isArray(entry.fields?.answerAreas)) {
+    answerAreas = (entry.fields.answerAreas as Array<Entry<ClickAreaSkeleton>>)
+      .map((entry) => mapToClickArea(entry as Entry<ClickAreaSkeleton, undefined, string>))
+      .filter((area): area is ClickArea => area !== undefined);
+  }
+
   return {
     id: entry.sys.id,
     name: fields.name,
     start: startClickArea,
     questions: questions,
+    answerAreas: answerAreas,
     successSound: extractAsset(fields.successSound),
     errorSounds: extractAssets(fields.errorSounds || []),
     correctAnswerSounds: extractAssets(fields.correctAnswerSounds || []),

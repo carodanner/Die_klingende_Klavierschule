@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
+import TrueFalseGameView from "./TrueFalseGameView";
 import { ArrowsPointingOutIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AudioProvider } from "@/contexts/AudioContext";
 
@@ -35,6 +36,10 @@ export default function TaskView({ task, preview }: TaskViewProps) {
 
       {task.simpleInteractions.map((area) => (
         <ClickAreaView key={area.id} clickArea={area} preview={preview} />
+      ))}
+      
+      {task.trueFalseGames.map((game) => (
+        <TrueFalseGameView key={game.id} game={game} preview={preview} />
       ))}
     </div>
   );

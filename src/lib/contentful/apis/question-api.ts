@@ -1,5 +1,5 @@
 import { Asset, Entry, EntrySkeletonType } from "contentful";
-import { AssetWrapper, extractAsset } from "./asset-api";
+import { AssetWrapper, extractAsset, extractAssets } from "./asset-api";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
 
 export type Question = {
@@ -7,12 +7,14 @@ export type Question = {
   name: string;
   question: AssetWrapper;
   correctAnswers: ClickArea[];
+  specificErrorSounds: AssetWrapper[];
 };
 
 type QuestionFields = {
   name: string;
   question: Asset;
   correctAnswers: Array<Entry<ClickAreaSkeleton>>;
+  specificErrorSounds: Asset[];
 };
 
 export type QuestionSkeleton = EntrySkeletonType<QuestionFields, "question">;
@@ -46,5 +48,6 @@ export function mapToQuestion(
     name: fields.name,
     question: questionAsset,
     correctAnswers: correctAnswers,
+    specificErrorSounds: extractAssets(fields.specificErrorSounds),
   };
 }
