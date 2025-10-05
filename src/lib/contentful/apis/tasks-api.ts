@@ -1,6 +1,7 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
 import { getEntries } from "../client";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
+import { TrueFalseGame, TrueFalseGameSkeleton, mapToTrueFalseGame } from "./trueFalseGame-api";
 import { AssetWrapper, extractAsset } from "./asset-api";
 
 export type Task = {
@@ -12,6 +13,7 @@ export type Task = {
   imageWidth?: number;
   shortDescription?: string;
   simpleInteractions: ClickArea[];
+  trueFalseGames: TrueFalseGame[];
 };
 
 type TaskFields = {
@@ -22,6 +24,7 @@ type TaskFields = {
   imageWidth: number;
   shortDescription: string;
   simpleInteractions: Array<Entry<ClickAreaSkeleton>>;
+  trueFalseGames: Array<Entry<TrueFalseGameSkeleton>>;
 };
 
 export type TaskSkeleton = EntrySkeletonType<TaskFields, "aufgabe">;
@@ -33,6 +36,7 @@ type TaskQuery = EntriesQueries<TaskSkeleton, undefined> & {
 export async function loadTasks(): Promise<Task[]> {
   const query: TaskQuery = {
     content_type: "aufgabe",
+    include: 10, // TODO maybe delete later so that we don't fetch too much data unnecessarily
   };
 
   const response = await getEntries<TaskSkeleton>(query);
@@ -44,6 +48,7 @@ export async function loadTaskBySlug(slug: string): Promise<Task | undefined> {
   const query: TaskQuery = {
     content_type: "aufgabe",
     "fields.slug": slug,
+    include: 10,
   };
 
   const response = await getEntries<TaskSkeleton>(query);
@@ -70,6 +75,17 @@ export function mapToTask(
       .filter((ca): ca is ClickArea => ca !== undefined);
   }
 
+  let trueFalseGames: TrueFalseGame[] = [];
+  if (Array.isArray(entry.fields?.trueFalseGames)) {
+    trueFalseGames = (
+      entry.fields.trueFalseGames as Array<Entry<TrueFalseGameSkeleton>>
+    )
+      .map((entry) =>
+        mapToTrueFalseGame(entry as Entry<TrueFalseGameSkeleton, undefined, string>)
+      )
+      .filter((game): game is TrueFalseGame => game !== undefined);
+  }
+
   return {
     id: entry.sys.id,
     name: entry.fields.name,
@@ -79,5 +95,6 @@ export function mapToTask(
     imageWidth: entry.fields.imageWidth,
     shortDescription: entry.fields.shortDescription,
     simpleInteractions: clickAreas,
+    trueFalseGames: trueFalseGames,
   };
 }
