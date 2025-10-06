@@ -46,7 +46,7 @@ export default async function Page({
             index={index}
             key={index}
             task={task}
-            shrinkToWidth={300}
+            shrinkToWidth={200}
             urlPrefix={`/aufgabenListe/${listSlug}`}
           />
         ))}

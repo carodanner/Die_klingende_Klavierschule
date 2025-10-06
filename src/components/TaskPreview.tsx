@@ -34,15 +34,11 @@ export default function TaskPreview({
         }}
       >
 
-        
-
-        {/* <div className="w-full">
-          {task.shortDescription ?? "Beschreibung fehlt"}
-        </div> */}
+      
 
         <Link
           href={`${urlPrefix}/aufgabe/${task.slug}`}
-          className="w-280 min-h-50 flex justify-center"
+          className="flex justify-center"
         >
           {imageUrl && (
             <Image
