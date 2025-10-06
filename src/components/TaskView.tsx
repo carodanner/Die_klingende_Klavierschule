@@ -1,10 +1,7 @@
-"use client";
-import { useState } from "react";
 import Image from "next/image";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
 import TrueFalseGameView from "./TrueFalseGameView";
-import { ArrowsPointingOutIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AudioProvider } from "@/contexts/AudioContext";
 
 type TaskViewProps = {
