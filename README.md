@@ -18,7 +18,7 @@ Make sure you have the following installed:
 1. Clone the repository:
 
    ```
-   git clone https://github.com/carodanner/Die_klingende_Klavierschule.git
+   git clone https://github.com/carodanner/Die_klingende_Klavierschule.git klingende-klavierschule
    ```
 
 2. Navigate into the project directory:
@@ -31,6 +31,12 @@ Make sure you have the following installed:
 
    ```
    npm install
+   ```
+
+4. Copy the environment template and fill out the missing values like the API token:
+
+   ```
+   cp env.template .env.local
    ```
 
 ### Running the Application
