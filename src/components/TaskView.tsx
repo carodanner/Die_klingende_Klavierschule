@@ -13,10 +13,12 @@ type TaskViewProps = {
 };
 
 export default function TaskView({ task, preview }: TaskViewProps) {
-  const [showModal, setShowModal] = useState(false);
 
-  const content = (
-    <div
+
+  return (
+    <AudioProvider>
+      
+     <div
       className="mx-auto block"
       style={{
         position: "relative",
@@ -42,45 +44,7 @@ export default function TaskView({ task, preview }: TaskViewProps) {
         <TrueFalseGameView key={game.id} game={game} preview={preview} />
       ))}
     </div>
-  );
 
-  return (
-    <AudioProvider>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-2xl font-bold">{task.name}</span>
-        <button
-          type="button"
-          className="p-2 rounded hover:bg-gray-200"
-          onClick={() => setShowModal(true)}
-          title="Vollbild anzeigen"
-        >
-          <ArrowsPointingOutIcon className="h-8 w-12 text-gray-700" />
-        </button>
-      </div>
-      {content}
-      {showModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-60"
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            className="bg-white rounded-lg shadow-lg relative flex flex-col items-center w-full max-w-5xl p-4 mt-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute top-2 right-2 p-2 rounded"
-              onClick={() => setShowModal(false)}
-              title="Schließen"
-            >
-              <XMarkIcon className="h-8 w-8 text-black" />
-            </button>
-            <div className="w-full flex items-center justify-center">
-              {content}
-            </div>
-          </div>
-        </div>
-      )}
     </AudioProvider>
   );
 }

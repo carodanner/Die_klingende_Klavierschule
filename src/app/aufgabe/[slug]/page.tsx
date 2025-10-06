@@ -33,8 +33,8 @@ export default async function Page({
   }
 
   return (
-    <>
-      <TaskView task={task} preview={isPreview} />
-    </>
+      <main className="flex-1 w-full bg-white">
+        <TaskView task={task} preview={isPreview} />
+      </main>
   );
 }

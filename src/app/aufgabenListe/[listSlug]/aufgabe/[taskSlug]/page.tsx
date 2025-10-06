@@ -56,7 +56,7 @@ export default async function Page({
       : null;
 
   return (
-    <>
+    <main className="flex-1 w-full bg-white">
       <TaskView task={task} preview={isPreview} />
       <div className="flex justify-between items-center mt-8">
         {prevTask ? (
@@ -82,6 +82,6 @@ export default async function Page({
           <div />
         )}
       </div>
-    </>
+    </main>
   );
 }
