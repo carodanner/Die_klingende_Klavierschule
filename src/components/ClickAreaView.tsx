@@ -7,21 +7,29 @@ import { useAudio } from "@/contexts/AudioContext";
 type ClickAreaViewProps = {
   clickArea: ClickArea;
   preview?: boolean;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
 export default function ClickAreaView({
   clickArea,
   preview,
+  imageWidth = 893, // fallback to default if not provided
+  imageHeight = 500,
 }: ClickAreaViewProps) {
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { playAudio } = useAudio();
 
+  // Calculate percentages
+  const leftPercent = (clickArea.x / imageWidth) * 100;
+  const topPercent = (clickArea.y / imageHeight) * 100;
+  const widthPercent = (clickArea.width / imageWidth) * 100;
+  const heightPercent = (clickArea.height / imageHeight) * 100;
+
   const handleClick = () => {
     if (clickArea.sounds.length === 0) return;
-
-    // If audio is currently playing, stop it and cycle to next sound
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -29,14 +37,10 @@ export default function ClickAreaView({
       setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
       return;
     }
-
     const soundToPlay = clickArea.sounds[currentSoundIndex];
     if (!soundToPlay) return;
-
     const audio = new Audio(soundToPlay.url);
     audioRef.current = audio;
-
-    // Set up event listeners
     audio.onplay = () => setIsPlaying(true);
     audio.onended = () => {
       setIsPlaying(false);
@@ -48,8 +52,6 @@ export default function ClickAreaView({
         `Failed to play sound: ${soundToPlay.url}, error: ${error}`
       );
     };
-
-    // Use the global audio manager to play the sound
     playAudio(audio, () => {
       setIsPlaying(false);
       setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
@@ -60,10 +62,10 @@ export default function ClickAreaView({
     <div
       style={{
         position: "absolute",
-        left: clickArea.x,
-        top: clickArea.y,
-        width: clickArea.width,
-        height: clickArea.height,
+        left: `${leftPercent}%`,
+        top: `${topPercent}%`,
+        width: `${widthPercent}%`,
+        height: `${heightPercent}%`,
         border: preview ? "2px dashed red" : "none",
         cursor: "pointer",
         background: preview ? "rgba(255,0,0,0.1)" : "transparent",

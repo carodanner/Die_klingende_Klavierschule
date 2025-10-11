@@ -1,6 +1,14 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+
 export default function HomePage() {
   return (
-    <main className="max-w-2xl mx-auto p-8">
+    <div className="min-h-screen flex flex-col">
+  <div className="max-w-7xl mx-auto w-full">
+    <Header />
+  </div>
+  <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
+    <div className="max-w-2xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Willkommen bei der Klingenden Klavierschule
       </h1>
@@ -19,6 +27,9 @@ export default function HomePage() {
         Starten Sie jetzt und erleben Sie, wie einfach und unterhaltsam das
         Klavierspielen sein kann!
       </p>
+    </div>
     </main>
+  <Footer />
+</div>    
   );
 }

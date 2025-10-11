@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   return (
@@ -9,15 +10,22 @@ export default function Header() {
             Home
           </Link>
           <Link href="/aufgabe" className="hover:underline">
-            Aufgaben
+            Klingende Karten
           </Link>
           <Link href="/aufgabenListe" className="hover:underline">
-            Aufgaben Listen
+            Karteikasten
           </Link>
         </div>
-        <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
-          Klingende Klavierschule
-        </h1>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/images/logo.webp"
+            alt="Klingende Klavierschule Logo"
+            height={50}
+            width={280} // Adjust width as needed to keep aspect ratio
+            priority
+            style={{ height: "50px", width: "auto" }}
+          />
+        </div>
       </nav>
     </header>
   );

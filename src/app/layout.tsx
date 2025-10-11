@@ -1,9 +1,8 @@
 import React from "react";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Fathom from "@/components/Fathom";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,15 +10,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen flex flex-col">
-          <div className="max-w-7xl mx-auto w-full">
-            <Header />
-          </div>
-          <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <Fathom />
+        {children}
       </body>
     </html>
   );

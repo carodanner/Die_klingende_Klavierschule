@@ -1,86 +1,68 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
 import TrueFalseGameView from "./TrueFalseGameView";
-import { ArrowsPointingOutIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AudioProvider } from "@/contexts/AudioContext";
+import Image from "next/image";
+import Link from "next/link";
 
 type TaskViewProps = {
   task: Task;
   preview?: boolean;
+  backUrl?: string;
 };
 
-export default function TaskView({ task, preview }: TaskViewProps) {
-  const [showModal, setShowModal] = useState(false);
-
-  const content = (
-    <div
-      className="mx-auto block"
-      style={{
-        position: "relative",
-        width: task.imageWidth ?? 893,
-        height: task.imageHeight ?? 500,
-      }}
-    >
-      {task.image?.url && (
-        <Image
-          src={task.image.url ?? ""}
-          alt={task.name}
-          width={task.imageWidth ?? 893}
-          height={task.imageHeight ?? 500}
-          style={{ display: "block" }}
-        />
-      )}
-
-      {task.simpleInteractions.map((area) => (
-        <ClickAreaView key={area.id} clickArea={area} preview={preview} />
-      ))}
-      
-      {task.trueFalseGames.map((game) => (
-        <TrueFalseGameView key={game.id} game={game} preview={preview} />
-      ))}
-    </div>
-  );
-
+export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
   return (
     <AudioProvider>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-2xl font-bold">{task.name}</span>
-        <button
-          type="button"
-          className="p-2 rounded hover:bg-gray-200"
-          onClick={() => setShowModal(true)}
-          title="Vollbild anzeigen"
-        >
-          <ArrowsPointingOutIcon className="h-8 w-12 text-gray-700" />
-        </button>
-      </div>
-      {content}
-      {showModal && (
+      <div className="w-full h-full flex items-center justify-center bg-white">
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-60"
-          onClick={() => setShowModal(false)}
+          className="relative w-full"
+          style={{
+            backgroundImage: `url(${task.image?.url})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            aspectRatio: `${task.imageWidth ?? 893} / ${task.imageHeight ?? 500}`,
+          }}
         >
-          <div
-            className="bg-white rounded-lg shadow-lg relative flex flex-col items-center w-full max-w-5xl p-4 mt-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute top-2 right-2 p-2 rounded"
-              onClick={() => setShowModal(false)}
-              title="Schließen"
+          {/* Back button */}
+          {backUrl && (
+            <Link
+              href={backUrl}
+              className="absolute top-4 right-4 z-10"
+              title="Zurück"
             >
-              <XMarkIcon className="h-8 w-8 text-black" />
-            </button>
-            <div className="w-full flex items-center justify-center">
-              {content}
-            </div>
-          </div>
+              <Image
+                src="/images/back.webp"
+                alt="Zurück"
+                width={60}
+                height={60}
+                className="rounded-full shadow hover:scale-105 transition-transform"
+                priority
+              />
+            </Link>
+          )}
+          {/* Overlay interactive areas */}
+          {task.simpleInteractions.map((area) => (
+            <ClickAreaView
+              key={area.id}
+              clickArea={area}
+              preview={preview}
+              imageWidth={task.imageWidth ?? 893}
+              imageHeight={task.imageHeight ?? 500}
+            />
+          ))}
+          {task.trueFalseGames.map((game) => (
+            <TrueFalseGameView
+              key={game.id}
+              game={game}
+              preview={preview}
+              eventName={task.slug}
+            />
+          ))}
         </div>
-      )}
+      </div>
     </AudioProvider>
   );
 }
