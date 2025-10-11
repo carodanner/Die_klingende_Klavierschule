@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
 import TrueFalseGameView from "./TrueFalseGameView";
@@ -54,7 +54,12 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
             />
           ))}
           {task.trueFalseGames.map((game) => (
-            <TrueFalseGameView key={game.id} game={game} preview={preview} />
+            <TrueFalseGameView
+              key={game.id}
+              game={game}
+              preview={preview}
+              eventName={task.slug}
+            />
           ))}
         </div>
       </div>
