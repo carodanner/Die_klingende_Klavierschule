@@ -4,7 +4,7 @@ import { createContext, useContext, useRef, ReactNode, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 interface AudioContextType {
-  playAudio: (audio: HTMLAudioElement, onEnded?: () => void) => void;
+  playAudio: (audio: HTMLAudioElement | null, onEnded?: () => void) => void;
   stopAllAudio: () => void;
 }
 
@@ -14,12 +14,14 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const pathname = usePathname();
 
-  const playAudio = (audio: HTMLAudioElement, onEnded?: () => void) => {
+  const playAudio = (audio: HTMLAudioElement | null, onEnded?: () => void) => {
     // Stop any currently playing audio
     if (currentAudioRef.current && !currentAudioRef.current.paused) {
       currentAudioRef.current.pause();
       currentAudioRef.current.currentTime = 0;
     }
+
+    if (!audio) return;
 
     // Set the new audio as current
     currentAudioRef.current = audio;

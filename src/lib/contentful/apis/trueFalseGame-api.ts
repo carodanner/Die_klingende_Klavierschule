@@ -12,6 +12,7 @@ export type TrueFalseGame = {
   successSound?: AssetWrapper;
   errorSounds: AssetWrapper[];
   correctAnswerSounds: AssetWrapper[];
+  isSequence: boolean;
 };
 
 type TrueFalseGameFields = {
@@ -22,6 +23,7 @@ type TrueFalseGameFields = {
   successSound?: Asset;
   errorSounds?: Asset[];
   correctAnswerSounds?: Asset[];
+  isSequence?: boolean;
 };
 
 export type TrueFalseGameSkeleton = EntrySkeletonType<
@@ -68,5 +70,6 @@ export function mapToTrueFalseGame(
     successSound: extractAsset(fields.successSound),
     errorSounds: extractAssets(fields.errorSounds || []),
     correctAnswerSounds: extractAssets(fields.correctAnswerSounds || []),
+    isSequence: !!fields.isSequence,
   };
 }
