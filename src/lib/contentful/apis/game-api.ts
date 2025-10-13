@@ -3,7 +3,7 @@ import { AssetWrapper, extractAsset, extractAssets } from "./asset-api";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
 import { mapToQuestion, Question, QuestionSkeleton } from "./question-api";
 
-export type TrueFalseGame = {
+export type Game = {
   id: string;
   name: string;
   start: ClickArea;
@@ -12,10 +12,10 @@ export type TrueFalseGame = {
   successSound?: AssetWrapper;
   errorSounds: AssetWrapper[];
   correctAnswerSounds: AssetWrapper[];
-  isSequence: boolean;
+  type: "Einfach" | "Sequenz" | "Sammlung" | undefined;
 };
 
-type TrueFalseGameFields = {
+type GameFields = {
   name: string;
   start?: Entry<ClickAreaSkeleton>;
   questions?: Array<Entry<QuestionSkeleton>>;
@@ -23,17 +23,14 @@ type TrueFalseGameFields = {
   successSound?: Asset;
   errorSounds?: Asset[];
   correctAnswerSounds?: Asset[];
-  isSequence?: boolean;
+  type: "Einfach" | "Sequenz" | "Sammlung" | undefined;
 };
 
-export type TrueFalseGameSkeleton = EntrySkeletonType<
-  TrueFalseGameFields,
-  "trueFalseGame"
->;
+export type GameSkeleton = EntrySkeletonType<GameFields, "trueFalseGame">;
 
-export function mapToTrueFalseGame(
-  entry: Entry<TrueFalseGameSkeleton, undefined, string>
-): TrueFalseGame | undefined {
+export function mapToGame(
+  entry: Entry<GameSkeleton, undefined, string>
+): Game | undefined {
   if (!entry || !entry.fields) return undefined;
 
   const fields = entry.fields;
@@ -57,9 +54,13 @@ export function mapToTrueFalseGame(
   let answerAreas: ClickArea[] = [];
   if (Array.isArray(entry.fields?.answerAreas)) {
     answerAreas = (entry.fields.answerAreas as Array<Entry<ClickAreaSkeleton>>)
-      .map((entry) => mapToClickArea(entry as Entry<ClickAreaSkeleton, undefined, string>))
+      .map((entry) =>
+        mapToClickArea(entry as Entry<ClickAreaSkeleton, undefined, string>)
+      )
       .filter((area): area is ClickArea => area !== undefined);
   }
+
+  console.log("Mapped Game:", entry.sys.id, fields.name, fields.type);
 
   return {
     id: entry.sys.id,
@@ -70,6 +71,6 @@ export function mapToTrueFalseGame(
     successSound: extractAsset(fields.successSound),
     errorSounds: extractAssets(fields.errorSounds || []),
     correctAnswerSounds: extractAssets(fields.correctAnswerSounds || []),
-    isSequence: !!fields.isSequence,
+    type: fields.type,
   };
 }
