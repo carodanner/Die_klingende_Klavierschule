@@ -8,6 +8,7 @@ export type Question = {
   question: AssetWrapper;
   correctAnswers: ClickArea[];
   specificErrorSounds: AssetWrapper[];
+  specificCorrectSounds: AssetWrapper[];
 };
 
 type QuestionFields = {
@@ -15,6 +16,7 @@ type QuestionFields = {
   question: Asset;
   correctAnswers: Array<Entry<ClickAreaSkeleton>>;
   specificErrorSounds: Asset[];
+  specificCorrectSounds: Asset[];
 };
 
 export type QuestionSkeleton = EntrySkeletonType<QuestionFields, "question">;
@@ -49,5 +51,6 @@ export function mapToQuestion(
     question: questionAsset,
     correctAnswers: correctAnswers,
     specificErrorSounds: extractAssets(fields.specificErrorSounds),
+    specificCorrectSounds: extractAssets(fields.specificCorrectSounds),
   };
 }
