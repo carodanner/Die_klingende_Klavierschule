@@ -93,9 +93,7 @@ export default function GameView({ game, eventName, preview }: GameViewProps) {
           playAudio(dingSound);
         }
       } else {
-        playAudio(failureSound, () => {
-          // playAudio(new Audio(questions[currentQuestionIndex]?.question.url)); // TODO: play question again for sequence?
-        });
+        playAudio(failureSound);
       }
 
       return;
@@ -139,10 +137,11 @@ export default function GameView({ game, eventName, preview }: GameViewProps) {
         setAnsweredCorrectly(newAnsweredCorrectly);
       }
     } else {
-      // if wrong answer, play error sound and question again
+      // if wrong answer, play error sound and question again (only for simple games)
       playAudio(failureSound, () => {
-        // TODO: play question again even for collection?
-        playAudio(new Audio(questions[currentQuestionIndex].question.url));
+        if (game.type === "Einfach") {
+          playAudio(new Audio(questions[currentQuestionIndex].question.url));
+        }
       });
     }
   };
