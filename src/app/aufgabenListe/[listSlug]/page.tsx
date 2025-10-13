@@ -33,27 +33,26 @@ export default async function Page({
   }
 
   return (
-<div className="min-h-screen flex flex-col">
-  <div className="max-w-7xl mx-auto w-full">
-    <Header />
-  </div>
-  <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
-    <h1 className="text-2xl font-bold mb-4">{taskList.name}</h1>
-
-      <div className="flex flex-wrap gap-5 justify-center">
-        {taskList.tasks.map((task, index) => (
-          <TaskPreview
-            index={index}
-            key={index}
-            task={task}
-            shrinkToWidth={200}
-            urlPrefix={`/aufgabenListe/${listSlug}`}
-          />
-        ))}
+    <div className="min-h-screen flex flex-col">
+      <div className="max-w-7xl mx-auto w-full">
+        <Header />
       </div>
-  </main>
-  <Footer />
-</div>    
+      <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
+        <h1 className="text-2xl font-bold mb-4">{taskList.name}</h1>
 
+        <div className="flex flex-wrap gap-5 justify-center">
+          {taskList.tasks.map((task, index) => (
+            <TaskPreview
+              index={index}
+              key={index}
+              task={task}
+              shrinkToWidth={200}
+              urlPrefix={`/aufgabenListe/${listSlug}`}
+            />
+          ))}
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }
