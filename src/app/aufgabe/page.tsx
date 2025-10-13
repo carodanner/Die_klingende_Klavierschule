@@ -26,7 +26,6 @@ export default async function Page() {
         </div>
       </main>
       <Footer />
-    </div>    
-    
+    </div>
   );
 }

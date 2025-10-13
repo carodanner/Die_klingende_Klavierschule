@@ -12,7 +12,7 @@ export default function TaskPreview({
   task,
   shrinkToWidth,
   urlPrefix,
-  index
+  index,
 }: TaskViewProps) {
   let imageHeight = shrinkToWidth;
   if (task.imageWidth && task.imageHeight) {
@@ -33,9 +33,6 @@ export default function TaskPreview({
           boxSizing: "border-box",
         }}
       >
-
-      
-
         <Link
           href={`${urlPrefix}/aufgabe/${task.slug}`}
           className="flex justify-center"
@@ -62,7 +59,6 @@ export default function TaskPreview({
         >
           {index + 1}. {task.name}
         </h3>
-
       </div>
     </div>
   );
