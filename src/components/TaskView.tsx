@@ -1,7 +1,7 @@
 "use client";
 import { Task } from "@/lib/contentful/apis/tasks-api";
 import ClickAreaView from "./ClickAreaView";
-import TrueFalseGameView from "./TrueFalseGameView";
+import GameView from "./GameView";
 import { AudioProvider } from "@/contexts/AudioContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,8 +53,8 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
               imageHeight={task.imageHeight ?? 500}
             />
           ))}
-          {task.trueFalseGames.map((game) => (
-            <TrueFalseGameView
+          {task.games.map((game) => (
+            <GameView
               key={game.id}
               game={game}
               preview={preview}

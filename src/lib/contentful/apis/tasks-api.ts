@@ -1,11 +1,7 @@
 import { Asset, EntriesQueries, Entry, EntrySkeletonType } from "contentful";
 import { getEntries } from "../client";
 import { ClickArea, ClickAreaSkeleton, mapToClickArea } from "./clickArea-api";
-import {
-  TrueFalseGame,
-  TrueFalseGameSkeleton,
-  mapToTrueFalseGame,
-} from "./trueFalseGame-api";
+import { Game, GameSkeleton, mapToGame } from "./game-api";
 import { AssetWrapper, extractAsset } from "./asset-api";
 
 export type Task = {
@@ -17,7 +13,7 @@ export type Task = {
   imageWidth?: number;
   shortDescription?: string;
   simpleInteractions: ClickArea[];
-  trueFalseGames: TrueFalseGame[];
+  games: Game[];
 };
 
 type TaskFields = {
@@ -28,7 +24,7 @@ type TaskFields = {
   imageWidth: number;
   shortDescription: string;
   simpleInteractions: Array<Entry<ClickAreaSkeleton>>;
-  trueFalseGames: Array<Entry<TrueFalseGameSkeleton>>;
+  games: Array<Entry<GameSkeleton>>;
 };
 
 export type TaskSkeleton = EntrySkeletonType<TaskFields, "aufgabe">;
@@ -79,17 +75,13 @@ export function mapToTask(
       .filter((ca): ca is ClickArea => ca !== undefined);
   }
 
-  let trueFalseGames: TrueFalseGame[] = [];
-  if (Array.isArray(entry.fields?.trueFalseGames)) {
-    trueFalseGames = (
-      entry.fields.trueFalseGames as Array<Entry<TrueFalseGameSkeleton>>
-    )
+  let games: Game[] = [];
+  if (Array.isArray(entry.fields?.games)) {
+    games = (entry.fields.games as Array<Entry<GameSkeleton>>)
       .map((entry) =>
-        mapToTrueFalseGame(
-          entry as Entry<TrueFalseGameSkeleton, undefined, string>
-        )
+        mapToGame(entry as Entry<GameSkeleton, undefined, string>)
       )
-      .filter((game): game is TrueFalseGame => game !== undefined);
+      .filter((game): game is Game => game !== undefined);
   }
 
   return {
@@ -101,6 +93,6 @@ export function mapToTask(
     imageWidth: entry.fields.imageWidth,
     shortDescription: entry.fields.shortDescription,
     simpleInteractions: clickAreas,
-    trueFalseGames: trueFalseGames,
+    games: games,
   };
 }
