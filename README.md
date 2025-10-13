@@ -20,7 +20,8 @@ A Next.js-based interactive piano learning platform that provides educational co
 
 ## Prerequisites
 
-- **Node.js** (version 14.0 or higher)
+- **Node.js** (version 14 or higher)
+- **npm** Node package manager
 - **Contentful account** with a space and API tokens
 
 ## Quickstart
