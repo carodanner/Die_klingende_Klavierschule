@@ -355,7 +355,17 @@ src/lib/contentful/
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-### Deployment URLs
+### Deployment
+
+This project is deployed using **Vercel** with automatic deployments:
 
 - **Production:** [klingende-klavierschule.de](https://klingende-klavierschule.de)
 - **Preview (dev branch):** [preview.klingende-klavierschule.de](https://preview.klingende-klavierschule.de)
+
+#### Vercel Configuration
+
+- **Automatic Deployments**: Connected to GitHub repository
+- **Preview Deployments**: Automatic preview deployment for development branch
+- **Environment Variables**: Configured in Vercel dashboard
+- **Build Command**: `npm run build`
+- **Output Directory**: `.next`
