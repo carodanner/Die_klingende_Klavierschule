@@ -1,5 +1,5 @@
 import { EntriesQueries, Entry, EntrySkeletonType } from "contentful";
-import { getEntries } from "../client";
+import { getEntries } from "../simple-client";
 
 type User = {
   id: string;
