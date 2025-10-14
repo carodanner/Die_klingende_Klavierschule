@@ -60,8 +60,6 @@ export function mapToGame(
       .filter((area): area is ClickArea => area !== undefined);
   }
 
-  console.log("Mapped Game:", entry.sys.id, fields.name, fields.type);
-
   return {
     id: entry.sys.id,
     name: fields.name,
