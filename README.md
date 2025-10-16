@@ -98,20 +98,6 @@ npm run start
 
 - **Fathom Analytics** - Privacy-focused analytics
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Environment Variables**: Ensure `.env.local` exists with all required Contentful credentials
-2. **Contentful Connection**: Verify space ID and access tokens are correct
-3. **Build Failures**: Clear Next.js cache with `rm -rf .next` and reinstall dependencies
-4. **Audio Issues**: Check browser permissions and audio file formats
-5. **TypeScript Errors**: Run `npx tsc --noEmit` to check for type issues
-
-### License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
 ### Deployment
 
 This project is deployed using **Vercel** with automatic deployments:
@@ -126,3 +112,17 @@ This project is deployed using **Vercel** with automatic deployments:
 - **Environment Variables**: Configured in Vercel dashboard
 - **Build Command**: `npm run build`
 - **Output Directory**: `.next`
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Environment Variables**: Ensure `.env.local` exists with all required Contentful credentials
+2. **Contentful Connection**: Verify space ID and access tokens are correct
+3. **Build Failures**: Clear Next.js cache with `rm -rf .next` and reinstall dependencies
+4. **Audio Issues**: Check browser permissions and audio file formats
+5. **TypeScript Errors**: Run `npx tsc --noEmit` to check for type issues
+
+### License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
