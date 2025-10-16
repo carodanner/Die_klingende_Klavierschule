@@ -41,7 +41,7 @@ export async function getEntries<
   if (SAVE_TO_CACHE_ENABLED) {
     await cacheJson(type, query, result);
   }
-  
+
   return result;
 }
 
