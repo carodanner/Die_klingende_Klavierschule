@@ -1,5 +1,4 @@
 // middleware.ts
-import { validateUser } from "@/lib/contentful/apis/user-api";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -12,6 +11,7 @@ const PUBLIC_PATHS = [
   /^\/favicon\.ico$/,
   /^\/robots\.txt$/,
   /^\/public\//,
+  /^\/api\/auth/, // Allow auth API calls
 ];
 
 function requireAuth() {
@@ -29,6 +29,30 @@ function decodeBasic(encoded: string): { user?: string; pass?: string } {
     return { user: decoded.slice(0, idx), pass: decoded.slice(idx + 1) };
   } catch {
     return {};
+  }
+}
+
+async function validateUserWithContentful(
+  user: string,
+  pass: string,
+  request: NextRequest
+): Promise<boolean> {
+  try {
+    // Call our auth API route which can use Contentful
+    // Use the same host as the current request
+    const url = new URL("/api/auth", request.url);
+    const response = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: user, password: pass }),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error("Auth API call failed:", error);
+    return false;
   }
 }
 
@@ -50,15 +74,11 @@ export async function middleware(req: NextRequest) {
   const { user, pass } = decodeBasic(encoded);
   if (!user || !pass) return requireAuth();
 
-  try {
-    if (await validateUser(user, pass)) {
-      return NextResponse.next();
-    }
-    return requireAuth();
-  } catch {
-    // Fail closed on Contentful errors
-    return requireAuth();
+  if (await validateUserWithContentful(user, pass, req)) {
+    return NextResponse.next();
   }
+
+  return requireAuth();
 }
 
 // protect everything by default; tweak if you only want to guard certain paths
