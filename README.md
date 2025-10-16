@@ -1,77 +1,128 @@
-# klingende-klavierschule
+# Klingende Klavierschule
 
-This is the "klingende-klavierschule" project, a Next.js application designed to provide an interactive platform for piano education.
+A Next.js-based interactive piano learning platform that provides educational content and exercises for piano students. The application integrates with Contentful CMS for content management and includes audio playback capabilities for musical exercises.
 
-## Getting Started
+## Table of Contents
 
-To get started with this project, follow the instructions below.
+- [Prerequisites](#prerequisites)
+- [Quickstart](#quickstart)
+- [Environment Configuration](#environment-configuration)
+- [Building for Production](#building-for-production)
+- [Technology Stack](#technology-stack)
+- [Troubleshooting](#troubleshooting)
 
-### Prerequisites
+## Prerequisites
 
-Make sure you have the following installed:
+- **Node.js** (version 14 or higher)
+- **npm** Node package manager
+- **Contentful account** with a space and API tokens
 
-- Node.js (version 14 or later)
-- npm (Node package manager)
+## Quickstart
 
-### Installation
+1. **Clone the repository**
 
-1. Clone the repository:
-
-   ```
-   git clone https://github.com/carodanner/Die_klingende_Klavierschule.git klingende-klavierschule
-   ```
-
-2. Navigate into the project directory:
-
-   ```
+   ```bash
+   git clone https://github.com/carodanner/Die_klingende_Klavierschule.git
    cd klingende-klavierschule
    ```
 
-3. Install the dependencies:
+2. **Install dependencies**
 
-   ```
+   ```bash
    npm install
    ```
 
-4. Copy the environment template and fill out the missing values like the API token:
+3. **Set up environment variables** (see [Environment Configuration](#environment-configuration))
 
+4. **Start development server**
+   ```bash
+   npm run dev
    ```
-   cp env.template .env.local
-   ```
+   The application will be available at `http://localhost:3000` with Turbo mode enabled for faster development.
 
-### Running the Application
+## Environment Configuration
 
-To run the application in development mode, use the following command:
+Create a `.env.local` file in the project root based on the provided `env.template`:
 
+```bash
+cp env.template .env.local
 ```
-npm run dev
-```
 
-This will start the Next.js development server, and you can view the application in your browser at `http://localhost:3000`.
+### Required Environment Variables
 
-### Building for Production
+| Variable                   | Description                   | Example        |
+| -------------------------- | ----------------------------- | -------------- |
+| `CONTENTFUL_SPACE_ID`      | Your Contentful space ID      | `abc123def456` |
+| `CONTENTFUL_ACCESS_TOKEN`  | Contentful delivery API token | `abc123def456` |
+| `CONTENTFUL_PREVIEW_TOKEN` | Contentful preview API token  | `abc123def456` |
+| `CONTENTFUL_USE_PREVIEW`   | Enable preview mode           | `false`        |
 
-To build the application for production, run:
+### Optional Environment Variables
 
-```
+| Variable                        | Description             | Default               |
+| ------------------------------- | ----------------------- | --------------------- |
+| `CONTENTFUL_CACHE_JSON`         | Enable JSON caching     | `false`               |
+| `CONTENTFUL_CACHE_JSON_ROOT`    | Cache directory         | `./.contentful-cache` |
+| `CONTENTFUL_USE_CACHED_RESULTS` | Use cached results      | `false`               |
+| `NEXT_PUBLIC_FATHOM_ENABLED`    | Enable Fathom analytics | `false`               |
+| `NEXT_PUBLIC_FATHOM_ID`         | Fathom site ID          | `ID`                  |
+
+## Building for Production
+
+### Build the Application
+
+```bash
 npm run build
 ```
 
-After building, you can start the production server with:
+### Start Production Server
 
+```bash
+npm run start
 ```
-npm start
-```
 
-### Contributing
+## Technology Stack
 
-If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
+### Frontend
+
+- **Next.js 15.3.3** - React framework with App Router
+- **React 19.0.0** - UI library
+- **TypeScript 5** - Type safety
+- **Tailwind CSS 4.1.14** - Utility-first CSS framework
+
+### Content Management
+
+- **Contentful** - Headless CMS
+
+### Analytics
+
+- **Fathom Analytics** - Privacy-focused analytics
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Environment Variables**: Ensure `.env.local` exists with all required Contentful credentials
+2. **Contentful Connection**: Verify space ID and access tokens are correct
+3. **Build Failures**: Clear Next.js cache with `rm -rf .next` and reinstall dependencies
+4. **Audio Issues**: Check browser permissions and audio file formats
+5. **TypeScript Errors**: Run `npx tsc --noEmit` to check for type issues
 
 ### License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-### Deployment URLs
+### Deployment
+
+This project is deployed using **Vercel** with automatic deployments:
 
 - **Production:** [klingende-klavierschule.de](https://klingende-klavierschule.de)
 - **Preview (dev branch):** [preview.klingende-klavierschule.de](https://preview.klingende-klavierschule.de)
+
+#### Vercel Configuration
+
+- **Automatic Deployments**: Connected to GitHub repository
+- **Preview Deployments**: Automatic preview deployment for development branch
+- **Environment Variables**: Configured in Vercel dashboard
+- **Build Command**: `npm run build`
+- **Output Directory**: `.next`
