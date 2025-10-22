@@ -6,16 +6,16 @@ import { useAudio } from "@/contexts/AudioContext";
 
 type ClickAreaViewProps = {
   clickArea: ClickArea;
+  imageWidth: number;
+  imageHeight: number;
   preview?: boolean;
-  imageWidth?: number;
-  imageHeight?: number;
 };
 
 export default function ClickAreaView({
   clickArea,
   preview,
-  imageWidth = 893, // fallback to default if not provided
-  imageHeight = 500,
+  imageWidth,
+  imageHeight,
 }: ClickAreaViewProps) {
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);

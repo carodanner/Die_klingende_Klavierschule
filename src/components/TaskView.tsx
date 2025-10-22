@@ -13,6 +13,9 @@ type TaskViewProps = {
 };
 
 export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
+  const imageWidth = task.imageWidth ?? 893;
+  const imageHeight = task.imageHeight ?? 500;
+
   return (
     <AudioProvider>
       <div className="w-full h-full flex items-center justify-center bg-white">
@@ -23,7 +26,7 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            aspectRatio: `${task.imageWidth ?? 893} / ${task.imageHeight ?? 500}`,
+            aspectRatio: `${imageWidth} / ${imageHeight}`,
           }}
         >
           {/* Back button */}
@@ -49,8 +52,8 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
               key={area.id}
               clickArea={area}
               preview={preview}
-              imageWidth={task.imageWidth ?? 893}
-              imageHeight={task.imageHeight ?? 500}
+              imageWidth={imageWidth}
+              imageHeight={imageHeight}
             />
           ))}
           {task.games.map((game) => (
@@ -59,6 +62,8 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
               game={game}
               preview={preview}
               eventName={task.slug}
+              imageWidth={imageWidth}
+              imageHeight={imageHeight}
             />
           ))}
         </div>
