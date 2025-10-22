@@ -13,10 +13,18 @@ const FATHOM_ENABLED = process.env.NEXT_PUBLIC_FATHOM_ENABLED === "true";
 type GameViewProps = {
   game: Game;
   eventName: string;
+  imageWidth: number;
+  imageHeight: number;
   preview?: boolean;
 };
 
-export default function GameView({ game, eventName, preview }: GameViewProps) {
+export default function GameView({
+  game,
+  eventName,
+  imageWidth,
+  imageHeight,
+  preview,
+}: GameViewProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
   const [questions, setQuestions] = useState<Question[]>(
     shuffleQuestions(game.questions)
@@ -149,11 +157,21 @@ export default function GameView({ game, eventName, preview }: GameViewProps) {
   return (
     <>
       <div onClick={startGame}>
-        <ClickAreaView clickArea={game.start} preview={preview} />
+        <ClickAreaView
+          clickArea={game.start}
+          preview={preview}
+          imageWidth={imageWidth}
+          imageHeight={imageHeight}
+        />
       </div>
       {game.answerAreas.map((area) => (
         <div key={area.id} onClick={() => handleAnswerClick(area)}>
-          <ClickAreaView clickArea={area} preview={preview} />
+          <ClickAreaView
+            clickArea={area}
+            preview={preview}
+            imageWidth={imageWidth}
+            imageHeight={imageHeight}
+          />
         </div>
       ))}
     </>
