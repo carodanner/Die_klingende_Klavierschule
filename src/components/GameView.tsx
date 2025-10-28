@@ -26,9 +26,7 @@ export default function GameView({
   preview,
 }: GameViewProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
-  const [questions, setQuestions] = useState<Question[]>(
-    shuffleQuestions(game.questions)
-  );
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentSequenceAnswerIndex, setCurrentSequenceAnswerIndex] =
     useState<number>(0);
   const [answeredCorrectly, setAnsweredCorrectly] = useState<Set<string>>(
@@ -50,12 +48,15 @@ export default function GameView({
   };
 
   const startGame = () => {
+    const shuffledQuestions = shuffleQuestions(game.questions);
+    setQuestions(shuffledQuestions);
     setCurrentQuestionIndex(0);
     if (FATHOM_ENABLED) {
       trackEvent("Starte Spiel: " + eventName, { _value: 100 });
     }
+
     playAudio(new Audio(game.start.sounds[0]?.url), () => {
-      playAudio(new Audio(questions[0]?.question.url));
+      playAudio(new Audio(shuffledQuestions[0]?.question.url));
     });
   };
 
