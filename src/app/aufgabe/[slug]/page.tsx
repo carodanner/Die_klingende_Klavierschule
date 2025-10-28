@@ -6,9 +6,11 @@ export async function generateStaticParams() {
   const tasks = await loadTasks();
 
   const allParams = await Promise.all(
-    tasks.map((task) => ({
-      slug: task.slug,
-    }))
+    tasks
+      .map((task) => ({
+        slug: task.slug,
+      }))
+      .filter((s) => s.slug !== undefined)
   );
 
   return allParams.flat();

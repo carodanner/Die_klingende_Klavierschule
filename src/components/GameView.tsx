@@ -15,6 +15,8 @@ type GameViewProps = {
   eventName: string;
   imageWidth: number;
   imageHeight: number;
+  enabled: boolean;
+  setCurrentGameId: (gameId: string) => void;
   preview?: boolean;
 };
 
@@ -23,12 +25,12 @@ export default function GameView({
   eventName,
   imageWidth,
   imageHeight,
+  enabled,
+  setCurrentGameId,
   preview,
 }: GameViewProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
-  const [questions, setQuestions] = useState<Question[]>(
-    shuffleQuestions(game.questions)
-  );
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentSequenceAnswerIndex, setCurrentSequenceAnswerIndex] =
     useState<number>(0);
   const [answeredCorrectly, setAnsweredCorrectly] = useState<Set<string>>(
@@ -50,12 +52,17 @@ export default function GameView({
   };
 
   const startGame = () => {
+    setCurrentGameId(game.id);
+    
+    const shuffledQuestions = shuffleQuestions(game.questions);
+    setQuestions(shuffledQuestions);
     setCurrentQuestionIndex(0);
     if (FATHOM_ENABLED) {
       trackEvent("Starte Spiel: " + eventName, { _value: 100 });
     }
+
     playAudio(new Audio(game.start.sounds[0]?.url), () => {
-      playAudio(new Audio(questions[0]?.question.url));
+      playAudio(new Audio(shuffledQuestions[0]?.question.url));
     });
   };
 
@@ -162,15 +169,17 @@ export default function GameView({
           preview={preview}
           imageWidth={imageWidth}
           imageHeight={imageHeight}
+          partOfGame={true}
         />
       </div>
-      {game.answerAreas.map((area) => (
+      {enabled && game.answerAreas.map((area) => (
         <div key={area.id} onClick={() => handleAnswerClick(area)}>
           <ClickAreaView
             clickArea={area}
             preview={preview}
             imageWidth={imageWidth}
             imageHeight={imageHeight}
+            partOfGame={true}
           />
         </div>
       ))}
