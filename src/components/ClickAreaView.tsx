@@ -1,7 +1,7 @@
 "use client";
 
 import { ClickArea } from "@/lib/contentful/apis/clickArea-api";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useAudio } from "@/contexts/AudioContext";
 
 type ClickAreaViewProps = {
@@ -19,8 +19,7 @@ export default function ClickAreaView({
 }: ClickAreaViewProps) {
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { playAudio } = useAudio();
+  const { playAudio, stopAllAudio } = useAudio();
 
   // Calculate percentages
   const leftPercent = (clickArea.x / imageWidth) * 100;
@@ -28,31 +27,22 @@ export default function ClickAreaView({
   const widthPercent = (clickArea.width / imageWidth) * 100;
   const heightPercent = (clickArea.height / imageHeight) * 100;
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    
     if (clickArea.sounds.length === 0) return;
-    if (isPlaying && audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+
+    if (isPlaying) {
+      stopAllAudio();
       setIsPlaying(false);
       setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
       return;
     }
+
     const soundToPlay = clickArea.sounds[currentSoundIndex];
     if (!soundToPlay) return;
-    const audio = new Audio(soundToPlay.url);
-    audioRef.current = audio;
-    audio.onplay = () => setIsPlaying(true);
-    audio.onended = () => {
-      setIsPlaying(false);
-      setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
-    };
-    audio.onerror = (error) => {
-      setIsPlaying(false);
-      console.error(
-        `Failed to play sound: ${soundToPlay.url}, error: ${error}`
-      );
-    };
-    playAudio(audio, () => {
+
+    playAudio(new Audio(soundToPlay.url), () => {
       setIsPlaying(false);
       setCurrentSoundIndex((prev) => (prev + 1) % clickArea.sounds.length);
     });
