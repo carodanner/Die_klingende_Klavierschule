@@ -5,6 +5,7 @@ import GameView from "./GameView";
 import { AudioProvider } from "@/contexts/AudioContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 type TaskViewProps = {
   task: Task;
@@ -13,6 +14,7 @@ type TaskViewProps = {
 };
 
 export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
+  const [currentGameId, setCurrentGameId] = useState<string | null>(null);
   const imageWidth = task.imageWidth ?? 893;
   const imageHeight = task.imageHeight ?? 500;
 
@@ -65,6 +67,8 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
               eventName={task.slug}
               imageWidth={imageWidth}
               imageHeight={imageHeight}
+              enabled={currentGameId === game.id}
+              setCurrentGameId={setCurrentGameId}
             />
           ))}
         </div>

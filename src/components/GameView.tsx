@@ -15,6 +15,8 @@ type GameViewProps = {
   eventName: string;
   imageWidth: number;
   imageHeight: number;
+  enabled: boolean;
+  setCurrentGameId: (gameId: string) => void;
   preview?: boolean;
 };
 
@@ -23,6 +25,8 @@ export default function GameView({
   eventName,
   imageWidth,
   imageHeight,
+  enabled,
+  setCurrentGameId,
   preview,
 }: GameViewProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1);
@@ -48,6 +52,8 @@ export default function GameView({
   };
 
   const startGame = () => {
+    setCurrentGameId(game.id);
+    
     const shuffledQuestions = shuffleQuestions(game.questions);
     setQuestions(shuffledQuestions);
     setCurrentQuestionIndex(0);
@@ -166,7 +172,7 @@ export default function GameView({
           partOfGame={true}
         />
       </div>
-      {game.answerAreas.map((area) => (
+      {enabled && game.answerAreas.map((area) => (
         <div key={area.id} onClick={() => handleAnswerClick(area)}>
           <ClickAreaView
             clickArea={area}
