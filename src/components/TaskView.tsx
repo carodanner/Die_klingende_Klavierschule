@@ -54,6 +54,7 @@ export default function TaskView({ task, preview, backUrl }: TaskViewProps) {
               preview={preview}
               imageWidth={imageWidth}
               imageHeight={imageHeight}
+              partOfGame={false}
             />
           ))}
           {task.games.map((game) => (

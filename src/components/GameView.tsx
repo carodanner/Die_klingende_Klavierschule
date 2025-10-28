@@ -162,6 +162,7 @@ export default function GameView({
           preview={preview}
           imageWidth={imageWidth}
           imageHeight={imageHeight}
+          partOfGame={true}
         />
       </div>
       {game.answerAreas.map((area) => (
@@ -171,6 +172,7 @@ export default function GameView({
             preview={preview}
             imageWidth={imageWidth}
             imageHeight={imageHeight}
+            partOfGame={true}
           />
         </div>
       ))}
