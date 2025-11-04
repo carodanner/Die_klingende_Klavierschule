@@ -43,7 +43,6 @@ export default async function Page({
         <div className="flex flex-wrap gap-5 justify-center">
           {taskList.tasks.map((task, index) => (
             <TaskPreview
-              index={index}
               key={index}
               task={task}
               shrinkToWidth={200}

@@ -5,14 +5,12 @@ type TaskViewProps = {
   task: Task;
   shrinkToWidth: number;
   urlPrefix: string;
-  index: number;
 };
 
 export default function TaskPreview({
   task,
   shrinkToWidth,
   urlPrefix,
-  index,
 }: TaskViewProps) {
   let imageHeight = shrinkToWidth;
   if (task.imageWidth && task.imageHeight) {
@@ -57,7 +55,7 @@ export default function TaskPreview({
             overflow: "hidden",
           }}
         >
-          {index + 1}. {task.name}
+          {task.name}
         </h3>
       </div>
     </div>
