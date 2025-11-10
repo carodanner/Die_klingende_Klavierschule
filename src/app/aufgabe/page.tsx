@@ -14,9 +14,8 @@ export default async function Page() {
       </div>
       <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
         <div className="flex flex-wrap gap-5 justify-center">
-          {tasks.map((task, index) => (
+          {tasks.map((task) => (
             <TaskPreview
-              index={index}
               key={task.id}
               task={task}
               shrinkToWidth={300}
