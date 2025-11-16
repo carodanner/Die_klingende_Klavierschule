@@ -7,7 +7,6 @@ export default function Footer() {
       <div className="max-w-[1440px] mx-auto px-8 md:px-40">
         <div className="section-box flex flex-col md:flex-row gap-8 md:gap-20 justify-between items-start mb-4 text-white p-5">
           <div className="flex flex-col gap-3 w-full md:w-1/4">
-            <span className="font-bold text-lg">Weiteres</span>
             <div className="flex flex-col gap-2">
               <Link href={`/impressum`} className="hover:underline font-medium">
                 Impressum

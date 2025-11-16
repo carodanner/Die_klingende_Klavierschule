@@ -57,7 +57,7 @@ export default function TaskPreview({
             overflow: "hidden",
           }}
         >
-          {index ? `${index + 1}. ` : ""}
+          {index !== undefined ? `${index + 1}. ` : ""}
           {task.name}
         </h3>
       </div>

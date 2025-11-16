@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import TaskView from "@/components/TaskView";
-import Image from "next/image";
 import {
   loadTaskListBySlug,
   loadTaskLists,
@@ -58,43 +57,10 @@ export default async function Page({
         task={task}
         preview={isPreview}
         backUrl={`/aufgabenListe/${listSlug}`}
+        prevTaskSlug={prevTask?.slug}
+        nextTaskSlug={nextTask?.slug}
+        listSlug={listSlug}
       />
-      <div className="flex justify-between items-center mt-8">
-        {prevTask ? (
-          <a
-            href={`/aufgabenListe/${listSlug}/aufgabe/${prevTask.slug}`}
-            className="flex items-center gap-2 ml-5"
-          >
-            <Image
-              src="/images/prev.svg"
-              alt="Vorherige Aufgabe"
-              width={60}
-              height={60}
-              className="rounded-full shadow hover:scale-105 transition-transform"
-              priority
-            />
-          </a>
-        ) : (
-          <div />
-        )}
-        {nextTask ? (
-          <a
-            href={`/aufgabenListe/${listSlug}/aufgabe/${nextTask.slug}`}
-            className="flex items-center gap-2 mr-5"
-          >
-            <Image
-              src="/images/next.svg"
-              alt="Nächste Aufgabe"
-              width={60}
-              height={60}
-              className="rounded-full shadow hover:scale-105 transition-transform"
-              priority
-            />
-          </a>
-        ) : (
-          <div />
-        )}
-      </div>
     </main>
   );
 }
