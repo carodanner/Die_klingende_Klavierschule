@@ -16,7 +16,7 @@ type GameViewProps = {
   imageWidth: number;
   imageHeight: number;
   enabled: boolean;
-  setCurrentGameId: (gameId: string) => void;
+  setCurrentGameId: (gameId: string | null) => void;
   preview?: boolean;
 };
 
@@ -49,6 +49,7 @@ export default function GameView({
         _value: 100,
       });
     }
+    setCurrentGameId(null);
   };
 
   const startGame = () => {
