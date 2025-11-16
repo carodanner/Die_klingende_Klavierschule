@@ -10,22 +10,20 @@ export default function HomePage() {
       <main className="max-w-7xl mx-auto w-full flex-1 mt-5">
         <div className="max-w-2xl mx-auto p-8">
           <h1 className="text-3xl font-bold mb-6 text-center">
-            Willkommen bei der Klingenden Klavierschule
+            Willkommen bei der klingenden Klavierschule
           </h1>
           <p className="mb-4">
-            Entdecken Sie die Freude am Klavierspielen! Unsere interaktive
-            Klavierschule begleitet Sie Schritt für Schritt auf Ihrem
-            musikalischen Weg – egal ob Anfänger oder Fortgeschrittener.
+            Dieses Pilotprojekt verbindet Klavierunterricht mit digitalen
+            Medien. Alle klingenden Karten auf dieser Webseite sollen in
+            Papierform im Unterricht gemeinsam mit einer Lehrperson genutzt
+            werden und hier in der digitalen Ebene nur beim häuslichen Üben zum
+            Klingen gebracht werden.
           </p>
-          <ul className="list-disc list-inside mb-6">
-            <li>Interaktive Aufgaben und Übungen</li>
-            <li>Individuelle Lernpfade</li>
-            <li>Hilfreiche Tipps und Erklärungen</li>
-            <li>Für jedes Alter geeignet</li>
-          </ul>
+
           <p>
-            Starten Sie jetzt und erleben Sie, wie einfach und unterhaltsam das
-            Klavierspielen sein kann!
+            Eine Einführung in das Konzept und die Funktionsweise von „Die
+            klingende Klavierschule“ befindet sich im Karteikasten unter dem
+            Titel „So funktioniert die Klavierschule“.
           </p>
         </div>
       </main>
