@@ -1,11 +1,11 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import TaskPreview from "@/components/TaskPreview";
-import { loadTasks } from "@/lib/contentful/apis/tasks-api";
+import { loadTasksInDisplayOrder } from "@/lib/contentful/apis/taskOrder-api";
 import React from "react";
 
 export default async function Page() {
-  const tasks = await loadTasks();
+  const tasks = await loadTasksInDisplayOrder();
 
   return (
     <div className="min-h-screen flex flex-col">
