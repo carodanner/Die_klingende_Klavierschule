@@ -50,6 +50,8 @@ export default function GameView({
       });
     }
     setCurrentGameId(null);
+    setCurrentSequenceAnswerIndex(0);
+    setAnsweredCorrectly(new Set());
   };
 
   const startGame = () => {
@@ -109,7 +111,10 @@ export default function GameView({
           playAudio(dingSound);
         }
       } else {
-        playAudio(failureSound);
+        setCurrentSequenceAnswerIndex(0);
+        playAudio(failureSound, () => playAudio(
+          new Audio(questions[currentQuestionIndex]?.question.url)
+        ));
       }
 
       return;
