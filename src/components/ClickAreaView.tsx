@@ -30,11 +30,16 @@ export default function ClickAreaView({
   const heightPercent = (clickArea.height / imageHeight) * 100;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (partOfGame) {
+    e.stopPropagation();
+    
+    if (clickArea.link) {
+      window.open(clickArea.link, "_blank", "noopener,noreferrer");
       return;
     }
 
-    e.stopPropagation();
+    if (partOfGame) {
+      return;
+    }
     
     if (clickArea.sounds.length === 0) return;
 
