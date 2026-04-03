@@ -9,6 +9,7 @@ export type ClickArea = {
   width: number;
   height: number;
   sounds: AssetWrapper[];
+  link: string;
 };
 
 type ClickAreaFields = {
@@ -18,6 +19,7 @@ type ClickAreaFields = {
   width: number;
   height: number;
   sounds: Asset[];
+  link: string;
 };
 
 export type ClickAreaSkeleton = EntrySkeletonType<ClickAreaFields, "clickArea">;
@@ -35,5 +37,6 @@ export function mapToClickArea(
     width: entry.fields.width,
     height: entry.fields.height,
     sounds: extractAssets(entry.fields.sounds),
+    link: entry.fields.link,
   };
 }
