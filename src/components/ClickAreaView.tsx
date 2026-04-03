@@ -45,8 +45,11 @@ export default function ClickAreaView({
       return;
     }
 
+
     const soundToPlay = clickArea.sounds[currentSoundIndex];
     if (!soundToPlay) return;
+
+    setIsPlaying(true);
 
     playAudio(new Audio(soundToPlay.url), () => {
       setIsPlaying(false);
