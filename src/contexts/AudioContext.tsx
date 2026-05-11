@@ -15,38 +15,52 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   const playAudio = (audio: HTMLAudioElement | null, onEnded?: () => void) => {
-    // Stop any currently playing audio
-    if (currentAudioRef.current && !currentAudioRef.current.paused) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
+    const previous = currentAudioRef.current;
+    if (previous) {
+      previous.onended = null;
+      previous.onerror = null;
+      previous.pause();
+      previous.currentTime = 0;
     }
 
-    if (!audio) return;
+    if (!audio) {
+      currentAudioRef.current = null;
+      return;
+    }
 
-    // Set the new audio as current
     currentAudioRef.current = audio;
 
-    // Set up event listeners
     audio.onended = () => {
-      currentAudioRef.current = null;
+      if (currentAudioRef.current === audio) {
+        currentAudioRef.current = null;
+      }
       onEnded?.();
     };
 
     audio.onerror = () => {
-      currentAudioRef.current = null;
+      if (currentAudioRef.current === audio) {
+        currentAudioRef.current = null;
+      }
     };
 
-    // Play the new audio
     audio.play().catch((error) => {
+      // AbortError is expected when a still-pending play() is interrupted by
+      // pause() above (rapid successive clicks); don't treat it as an error.
+      if (error?.name === "AbortError") return;
       console.error("Error playing audio:", error);
-      currentAudioRef.current = null;
+      if (currentAudioRef.current === audio) {
+        currentAudioRef.current = null;
+      }
     });
   };
 
   const stopAllAudio = () => {
-    if (currentAudioRef.current && !currentAudioRef.current.paused) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
+    const current = currentAudioRef.current;
+    if (current) {
+      current.onended = null;
+      current.onerror = null;
+      current.pause();
+      current.currentTime = 0;
       currentAudioRef.current = null;
     }
   };
