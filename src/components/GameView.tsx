@@ -60,6 +60,9 @@ export default function GameView({
     const shuffledQuestions = shuffleQuestions(game.questions);
     setQuestions(shuffledQuestions);
     setCurrentQuestionIndex(0);
+    setCurrentSequenceAnswerIndex(0);
+    setAnsweredCorrectly(new Set());
+
     if (FATHOM_ENABLED) {
       trackEvent("Starte Spiel: " + eventName, { _value: 100 });
     }
