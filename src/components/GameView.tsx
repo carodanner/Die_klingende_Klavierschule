@@ -43,7 +43,7 @@ export default function GameView({
   const playSuccessAndResetGame = () => {
     playAudio(new Audio(game.successSound?.url));
     setCurrentQuestionIndex(-1);
-    setQuestions(shuffleQuestions(game.questions));
+    setQuestions(pickQuestions(game.questions, game.numberOfQuestionsPerGame));
     if (FATHOM_ENABLED) {
       trackEvent("Spiel erfolgreich abgeschlossen: " + eventName, {
         _value: 100,
@@ -56,8 +56,8 @@ export default function GameView({
 
   const startGame = () => {
     setCurrentGameId(game.id);
-    
-    const shuffledQuestions = shuffleQuestions(game.questions);
+
+    const shuffledQuestions = pickQuestions(game.questions, game.numberOfQuestionsPerGame);
     setQuestions(shuffledQuestions);
     setCurrentQuestionIndex(0);
     setCurrentSequenceAnswerIndex(0);
@@ -200,6 +200,12 @@ const getRandomSound = (sounds: AssetWrapper[]): HTMLAudioElement => {
   return new Audio(sounds[Math.floor(Math.random() * sounds.length)].url);
 };
 
-const shuffleQuestions = (array: Question[]): Question[] => {
-  return array.sort(() => Math.random() - 0.5);
+const pickQuestions = (questions: Question[], count?: number): Question[] => {
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
+  const selected =
+    count && count > 0 && count < shuffled.length
+      ? shuffled.slice(0, count)
+      : shuffled;
+
+  return selected;
 };

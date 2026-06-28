@@ -13,6 +13,7 @@ export type Game = {
   errorSounds: AssetWrapper[];
   correctAnswerSounds: AssetWrapper[];
   type: "Einfach" | "Sequenz" | "Sammlung" | undefined;
+  numberOfQuestionsPerGame?: number;
 };
 
 type GameFields = {
@@ -24,6 +25,7 @@ type GameFields = {
   errorSounds?: Asset[];
   correctAnswerSounds?: Asset[];
   type: "Einfach" | "Sequenz" | "Sammlung" | undefined;
+  numberOfQuestionsPerGame?: number;
 };
 
 export type GameSkeleton = EntrySkeletonType<GameFields, "trueFalseGame">;
@@ -70,5 +72,6 @@ export function mapToGame(
     errorSounds: extractAssets(fields.errorSounds || []),
     correctAnswerSounds: extractAssets(fields.correctAnswerSounds || []),
     type: fields.type,
+    numberOfQuestionsPerGame: fields.numberOfQuestionsPerGame,
   };
 }
